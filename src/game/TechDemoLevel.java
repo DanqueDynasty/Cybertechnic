@@ -12,10 +12,8 @@ import com.Enjyn.Block;
 import com.Enjyn.PlayerClass;
 import com.Enjyn.BlockMap;
 import com.Enjyn.Camera;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.Graphics;
+import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
@@ -52,22 +50,33 @@ public class TechDemoLevel extends BasicGameState {
             Block tile = (Block) bMap.entities.get(i);
             if(player.getKeyPressed() && gc.getInput().isKeyDown(Input.KEY_D))
             {
-                mapX -= (float)0.001 * delta;
-                tile.poly.setX(mapX);
+                mapX -= .001f * delta;
             }
-            
-            if(player.getKeyPressed() && gc.getInput().isKeyDown(Input.KEY_A));
+
+            if(player.getKeyPressed() && gc.getInput().isKeyDown(Input.KEY_A))
             {
-                mapX += (float)0.001 * delta;
-                tile.poly.setX(mapX);
+                mapX += .001f * delta;
             }
         }
     }
     
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
     {
-        bMap.tmap.render((int)mapX, (int)mapY);
+        g.setDrawMode(Graphics.MODE_NORMAL);
+        //g.translate(mapX, mapY);
+        bMap.tmap.render(0, 0);
+        for(int i = 0; i < bMap.entities.size(); i++)
+        {
+            Block tile = (Block) bMap.entities.get(i);
+            g.setColor(Color.blue);
+            g.draw(tile.poly);
+        }
+        g.setDrawMode(Graphics.MODE_SCREEN);
+        g.setColor(Color.white);
         g.draw(player.getPolygon());
+        g.setColor(Color.yellow);
+        g.draw(player.groundPoly);
+        g.resetTransform();
     }
     
     public int getID()

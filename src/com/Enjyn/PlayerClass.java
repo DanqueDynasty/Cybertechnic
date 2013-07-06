@@ -68,8 +68,8 @@ public class PlayerClass implements SwingEntityFramework {
         groundPoly = new Polygon(new float[]
         {
             vec.x, vec.y,
-            vec.x, vec.y + hOffset + 1,
-            vec.x + wOffset, vec.y + hOffset + 1,
+            vec.x, vec.y + hOffset - 5,
+            vec.x + wOffset, vec.y + hOffset - 5,
             vec.x + wOffset, vec.y
         });
     }
@@ -101,11 +101,13 @@ public class PlayerClass implements SwingEntityFramework {
         {
             playerVec.x -= speed * delta;
             poly.setX(playerVec.x);
+            groundPoly.setX(playerVec.x);
             setKeyPressed(true);
             if(collidedWithTile(bmap) == true)
             {
                 playerVec.x += speed * delta;
                 poly.setX(playerVec.x);
+                groundPoly.setX(playerVec.x);
             }
         }else{
             setKeyPressed(false);
@@ -115,11 +117,13 @@ public class PlayerClass implements SwingEntityFramework {
         {
             playerVec.x += speed * delta;
             poly.setX(playerVec.x);
+            groundPoly.setX(playerVec.x);
             setKeyPressed(true);
             if(collidedWithTile(bmap) == true)
             {
                 playerVec.x -= speed * delta;
                 poly.setX(playerVec.x);
+                groundPoly.setX(playerVec.x);
             }
         }else{
             setKeyPressed(false);
@@ -141,7 +145,7 @@ public class PlayerClass implements SwingEntityFramework {
         
         if(!isOnGround(bmap))
         {
-            playerVec.y += (float)0.05 * delta;
+            playerVec.y += (float)0.5 * delta;
             poly.setY(playerVec.y);
             groundPoly.setY(playerVec.y);
             System.out.println(isOnGround(bmap));

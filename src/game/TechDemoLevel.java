@@ -45,25 +45,24 @@ public class TechDemoLevel extends BasicGameState {
     public void update(GameContainer gc, StateBasedGame sbg, int delta)throws SlickException
     {
         player.setControl(gc, delta, bMap);     
-        for(int i = 0; i < bMap.entities.size(); i++)
+        if(gc.getInput().isKeyDown(Input.KEY_D))
         {
-            Block tile = (Block) bMap.entities.get(i);
-            if(player.getKeyPressed() && gc.getInput().isKeyDown(Input.KEY_D))
+            if(player.getKeyPressed())
             {
-                mapX -= .001f * delta;
+                mapX -= 0.05f * delta;
             }
-
-            if(player.getKeyPressed() && gc.getInput().isKeyDown(Input.KEY_A))
-            {
-                mapX += .001f * delta;
-            }
+        }
+        
+        if(gc.getInput().isKeyDown(Input.KEY_A))
+        {
+            mapX += 0.05f * delta;
         }
     }
     
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
     {
         g.setDrawMode(Graphics.MODE_NORMAL);
-        //g.translate(mapX, mapY);
+        g.translate(mapX, mapY);
         bMap.tmap.render(0, 0);
         for(int i = 0; i < bMap.entities.size(); i++)
         {

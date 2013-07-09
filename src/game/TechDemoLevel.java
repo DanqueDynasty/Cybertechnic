@@ -75,7 +75,14 @@ public class TechDemoLevel extends BasicGameState {
         g.draw(player.getPolygon());
         g.setColor(Color.yellow);
         g.draw(player.groundPoly);
+        g.setColor(Color.cyan);
+        g.setDrawMode(Graphics.MODE_NORMAL);
+        g.drawString("1", player.groundPoly.getX(), player.groundPoly.getY());
+        g.drawString("2", player.groundPoly.getX(), player.groundPoly.getY() + player.getHeightOffset() - 5);
+        g.drawString("3", player.groundPoly.getX() + player.getWidthOffset(), player.groundPoly.getY() + player.getHeightOffset() - 5);
+        g.drawString("4", player.groundPoly.getX() + player.getWidthOffset(), player.groundPoly.getY());
         g.resetTransform();
+        
     }
     
     public int getID()

@@ -56,10 +56,10 @@ public class PlayerClass implements SwingEntityFramework {
     @Override
     public void setupPolygon(Vector2f vec, float w, float h) {
         poly = new Polygon(new float[]{
-            playerVec.x, playerVec.y,
-            playerVec.x, playerVec.y + hOffset,
-            playerVec.x + wOffset, playerVec.y + hOffset,
-            playerVec.x + wOffset, playerVec.y
+            vec.x, vec.y,
+            vec.x, vec.y + h,
+            vec.x + w, vec.y + h,
+            vec.x + w, vec.y
         });
     }
     
@@ -67,10 +67,10 @@ public class PlayerClass implements SwingEntityFramework {
     {
         groundPoly = new Polygon(new float[]
         {
-            vec.x, vec.y,
-            vec.x, vec.y + hOffset - 5,
-            vec.x + wOffset, vec.y + hOffset - 5,
-            vec.x + wOffset, vec.y
+            vec.x, vec.y - 2,
+            vec.x, vec.y + hOffset,
+            vec.x + wOffset, vec.y + hOffset,
+            vec.x + wOffset, vec.y -2
         });
     }
     
@@ -145,7 +145,7 @@ public class PlayerClass implements SwingEntityFramework {
         
         if(!isOnGround(bmap))
         {
-            playerVec.y += (float)0.5 * delta;
+            playerVec.y += (float)0.2 * delta;
             poly.setY(playerVec.y);
             groundPoly.setY(playerVec.y);
             System.out.println(isOnGround(bmap));

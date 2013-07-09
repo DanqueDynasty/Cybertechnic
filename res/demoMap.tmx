@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="128" height="48" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="collisionTile" tilewidth="16" tileheight="16">
-  <image source="collisionTile.png" width="16" height="16"/>
+  <image source="collisionTile.png" width="32" height="16"/>
  </tileset>
  <layer name="Tile Layer 1" width="128" height="48">
   <data encoding="base64" compression="gzip">

@@ -21,8 +21,10 @@ public class BlockMap {
     
     //set this asside for specifying the tile
     public static int square[] = {1, 1, 15, 1, 15, 15, 1, 15};
+    public static int groundSquare[] = {1, 1, 15, 1, 15, 15, 1, 15};
     
     public ArrayList<Object> entities;
+    public ArrayList<Object> ground;
     
     public BlockMap(String ref)throws SlickException{
         entities = new ArrayList<>();
@@ -38,6 +40,12 @@ public class BlockMap {
                 if(tileID == 1)
                 {
                     entities.add(new Block(x * 16, y * 16, square, "square"));
+                }
+                
+                //parse the ground blocks
+                if(tileID == 2)
+                {
+                    //ground.add(new Block(x, y, groundSquare, "ground"));
                 }
             }
         }

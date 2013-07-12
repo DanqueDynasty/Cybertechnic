@@ -8,6 +8,8 @@ import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.Image;
 
 /**
  *
@@ -26,6 +28,17 @@ public class PlayerClass implements SwingEntityFramework {
     public float velocityF;
     public boolean keyPressed;
     public boolean isJumping;
+    public int health;
+    public int dir;
+    public int gen;
+    public SpriteSheet masterSprite;
+    public Image masterImage;
+    public float time;
+    public float timeOfLastFrameChage;
+    public int currentFrame;
+    public int totalFrame;
+    public int weapon;
+    public boolean hasFired;
     
     public PlayerClass(Vector2f vec, float w, float h, float s, float v)
     {
@@ -94,6 +107,56 @@ public class PlayerClass implements SwingEntityFramework {
         keyPressed = b;
     }
     
+    public void setDirection(int d)
+    {
+        dir = d;
+    }
+    
+    public void setGender(int g)
+    {
+        gen = g;
+    }
+    
+    public void setHealth(int h)
+    {
+        health = h;
+    }
+    
+    public void setWeapon(int w)
+    {
+        weapon = w;
+    }
+    
+    public void setupSpriteSheet(SpriteSheet sprite)
+    {
+        int d = getDirection();
+        masterSprite = sprite;
+        masterImage = masterSprite.getSprite(currentFrame, d);
+        totalFrame = 4;
+    }
+    
+    public void updateSpriteSheet(int delta)
+    {
+        //I suppose this will go into the update method
+        time += (float)delta/1000;
+        if(time > timeOfLastFrameChage + 0.1f)
+        {
+            timeOfLastFrameChage = time;
+            nextFrame();
+        }
+    }
+    
+    public void nextFrame()
+    {
+        currentFrame++;
+        if(currentFrame < totalFrame - 1)
+        {
+            currentFrame = 0;
+        }
+        int d = getDirection();
+        masterImage = masterSprite.getSprite(currentFrame, d);
+    }
+    
     public void setControl(GameContainer gc, int delta, BlockMap bmap)
     {
         Input input = gc.getInput();
@@ -158,7 +221,16 @@ public class PlayerClass implements SwingEntityFramework {
             poly.setY(playerVec.y);
             groundPoly.setY(playerVec.y);
         }
-
+        
+        //switch weapon method
+        switch(getWeapon())
+        {
+            case 1:
+                
+                break;
+            default:
+                break;
+        }
     }
     @Override
     public Vector2f getVector() {
@@ -193,6 +265,41 @@ public class PlayerClass implements SwingEntityFramework {
     public float getVelocityf()
     {
         return velocityF;
+    }
+    
+    public int getDirection()
+    {
+        return dir;
+    }
+    
+    public int getGender()
+    {
+        return gen;
+    }
+    
+    public int getWeapon()
+    {
+        return weapon;
+    }
+    
+    public int getHealth()
+    {
+        return health;
+    }
+    
+    public Image getMasterImage()
+    {
+        return masterImage;
+    }
+    
+    public boolean getFiredStatus()
+    {
+        return hasFired;
+    }
+    
+    public SpriteSheet getMasterSprite()
+    {
+        return masterSprite;
     }
     
     public boolean collidedWithTile(BlockMap bmap)

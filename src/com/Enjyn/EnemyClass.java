@@ -21,10 +21,24 @@ public class EnemyClass implements SwingEntityFramework{
     public Polygon viewPoly; // if player has intersected
     public float speed;
     public boolean isJumping;
+    public float velocityF;
+    public int direction;
+    public int type;
+    public float health;
+    public float posOffset;//will manage the position offset of the character, so no run and gun
+    public float distanceOffset;
+    public boolean hasFired;
     
-    public EnemyClass()
+    public EnemyClass(Vector2f vec, float w, float h, float s, float v, int t)
     {
-    
+        setVector(vec);
+        setWidthOffset(w);
+        setHeightOffset(h);
+        setSpeed(s);
+        setVelocityF(v);
+        setupPolygon(vec, w, h);
+        setupFootPoly(vec, w, h);
+        setupViewPoly(vec, w, h);
     }
 
     @Override
@@ -52,11 +66,57 @@ public class EnemyClass implements SwingEntityFramework{
         });
     }
     
+    public void setupFootPoly(Vector2f vec, float w, float h)
+    {
+        groundPoly = new Polygon(new float[] {
+                vec.x, vec.y - 2,
+                vec.x, vec.y + h,
+                vec.x + w, vec.y + h,
+                vec.x + w, vec.y - 2
+        });
+    }
+    
+    public void setupViewPoly(Vector2f vec, float w, float h)
+    {
+        //this function will be responsible
+        viewPoly = new Polygon(new float[]{
+            vec.x - posOffset, vec.y,
+            vec.x - posOffset, vec.y + h,
+            vec.x + w + posOffset, vec.y + h,
+            vec.x + w + posOffset, vec.y
+        });
+    }
+    
     public void setSpeed(float s)
     {
         speed = s;
     }
 
+    public void setVelocityF(float v)
+    {
+        velocityF = v;
+    }
+    
+    public void setDisOffset(float dis)
+    {
+        distanceOffset = dis;
+    }
+    
+    public void setDirection(int d)
+    {
+        direction = d;
+    }
+    
+    public void setType(int t)
+    {
+        type = t;
+    }
+    
+    public void setHealth(int h)
+    {
+        health = h;
+    }
+    
     @Override
     public Vector2f getVector() {
         return posVec;
@@ -77,15 +137,88 @@ public class EnemyClass implements SwingEntityFramework{
         return poly;
     }
     
+    public int getDirection()
+    {
+        return direction;
+    }
+    
+    public void setPosOffset(float p)
+    {
+        posOffset = p;
+        this.setupViewPoly(posVec, this.getWidthOffset(), this.getHeightOffset());
+    }
+    
     public boolean isPlayerFound(PlayerClass player)
     {
-        if(player.getPolygon().intersects(viewPoly))
+        if(viewPoly.intersects(player.getPolygon()))
         {
             return true;
         }
         return false;
     }
     
+    public boolean isOnGround(BlockMap bmap)
+    {
+        for(int i = 0; i < bmap.entities.size(); i++)
+        {
+            Block tile = (Block) bmap.entities.get(i);
+            if(groundPoly.intersects(tile.poly))
+                return true;
+        }
+        return false;
+    }
     
+    public boolean getFiredStatus()
+    {
+        return hasFired;
+    }
     
+    public void update(PlayerClass player,BlockMap bmap, int delta)
+    {
+            //code here for how enemy will behave
+        
+        //first we check if the entity is on the ground
+        if(!isOnGround(bmap))
+        {
+            posVec.y += (float)0.2 * delta;
+            poly.setY(posVec.y);
+            groundPoly.setY(posVec.y);
+            viewPoly.setY(posVec.y);
+        }
+        
+        if(isOnGround(bmap))
+        {
+            posVec.y += (float)0 * delta;
+            poly.setY(posVec.y);
+            groundPoly.setY(posVec.y);
+            viewPoly.setY(posVec.y);
+        }
+        
+        if(isPlayerFound(player))
+        {
+            //here we will compare the x and y coordinates
+            if(player.getVector().getX() + distanceOffset > posVec.getX() && isOnGround(bmap))
+            {
+                posVec.x += speed * delta;
+                poly.setX(posVec.x);
+                groundPoly.setX(posVec.x);
+                viewPoly.setX(posVec.x - posOffset);
+                //set direction to head left
+                setDirection(0);
+                //set hasFired;
+                
+            }
+            
+            if(player.getVector().getX() - distanceOffset < posVec.getX() && isOnGround(bmap))
+            {
+                posVec.x -= speed * delta;
+                poly.setX(posVec.x);
+                groundPoly.setX(posVec.x);
+                viewPoly.setX(posVec.x - posOffset);
+                //set direction to go right
+                setDirection(1);
+                
+            }
+        }
+    }
 }

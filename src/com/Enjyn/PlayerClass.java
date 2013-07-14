@@ -39,6 +39,7 @@ public class PlayerClass implements SwingEntityFramework {
     public int totalFrame;
     public int weapon;
     public boolean hasFired;
+    public ProjectileClass bullet;
     
     public PlayerClass(Vector2f vec, float w, float h, float s, float v)
     {
@@ -49,6 +50,7 @@ public class PlayerClass implements SwingEntityFramework {
         setVelocityf(v);
         setupPolygon(vec, w, h);
         setupFootpoly(vec, w, h);
+        bullet = new ProjectileClass(vec, w, h);
     }
 
     @Override
@@ -127,6 +129,11 @@ public class PlayerClass implements SwingEntityFramework {
         weapon = w;
     }
     
+    public void setFired(boolean b)
+    {
+        hasFired = b;
+    }
+    
     public void setupSpriteSheet(SpriteSheet sprite)
     {
         int d = getDirection();
@@ -165,12 +172,14 @@ public class PlayerClass implements SwingEntityFramework {
             playerVec.x -= speed * delta;
             poly.setX(playerVec.x);
             groundPoly.setX(playerVec.x);
+            setDirection(0);
             setKeyPressed(true);
             if(collidedWithTile(bmap) == true)
             {
                 playerVec.x += speed * delta;
                 poly.setX(playerVec.x);
                 groundPoly.setX(playerVec.x);
+                setDirection(1);
             }
         }else{
             setKeyPressed(false);
@@ -191,6 +200,12 @@ public class PlayerClass implements SwingEntityFramework {
         }else{
             setKeyPressed(false);
         }
+        
+        if(input.isKeyPressed(Input.KEY_ENTER) && isOnGround(bmap))
+        {
+            setFired(true);
+            
+        }
 
         if(input.isKeyPressed(Input.KEY_SPACE) && isOnGround(bmap))
         {
@@ -202,15 +217,15 @@ public class PlayerClass implements SwingEntityFramework {
         {
             this.velocityF += 1 * delta;
             playerVec.y += this.velocityF;
-            poly.setY(playerVec.y);
-            groundPoly.setY(playerVec.y);
+            poly.setY((int)playerVec.y);
+            groundPoly.setY((int)playerVec.y);
         }
         
         if(!isOnGround(bmap))
         {
             playerVec.y += (float)0.2 * delta;
-            poly.setY(playerVec.y);
-            groundPoly.setY(playerVec.y);
+            poly.setY((int)playerVec.y);
+            groundPoly.setY((int)playerVec.y);
             System.out.println(isOnGround(bmap));
             isJumping = false;
         }
@@ -218,15 +233,21 @@ public class PlayerClass implements SwingEntityFramework {
         if(isOnGround(bmap))
         {
             playerVec.y += (float)0 * delta;
-            poly.setY(playerVec.y);
-            groundPoly.setY(playerVec.y);
+            poly.setY((int)playerVec.y);
+            groundPoly.setY((int)playerVec.y);
+        }
+        
+        if(hasFired)
+        { 
+            bullet.addBullet_Player(this);
+            setFired(false);
         }
         
         //switch weapon method
         switch(getWeapon())
         {
             case 1:
-                
+                bullet.playerFired(hasFired, this, delta);
                 break;
             default:
                 break;

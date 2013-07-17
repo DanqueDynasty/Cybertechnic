@@ -26,6 +26,7 @@ public class ProjectileClass implements SwingEntityFramework {
         setVector(vec);
         setWidthOffset(w);
         setHeightOffset(h);
+        project = new ArrayList<>();
     }
 
     public void setVector(Vector2f vec) {
@@ -73,7 +74,8 @@ public class ProjectileClass implements SwingEntityFramework {
         {
             Vector2f vec = player.getVector();
             vec.y = player.getVector().getY() - (player.getHeightOffset()/2);
-            project.add(new ProjectileClass(vec, 16, 16));
+            //project.add(new ProjectileClass(vec, 16, 16));
+            project.add(this);
         }
     }
     

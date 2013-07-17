@@ -133,9 +133,13 @@ public class TechDemoLevel extends BasicGameState {
                 {
                     g.draw(type1Enemy.get(i).getPolygon());
                     g.draw(type1Enemy.get(i).viewPoly);
-                    
-                    //g.draw(playerBullet.get(i).getPolygon());
                 }
+                
+                for(int i = 0; i < playerBullet.size(); i++)
+                {
+                    g.draw(playerBullet.get(i).getPolygon());
+                }
+                
                 g.setColor(Color.yellow);
                 g.draw(player.groundPoly);
                 g.setColor(Color.cyan);

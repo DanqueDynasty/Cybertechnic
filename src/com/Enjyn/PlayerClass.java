@@ -51,6 +51,8 @@ public class PlayerClass implements SwingEntityFramework {
         setupPolygon(vec, w, h);
         setupFootpoly(vec, w, h);
         bullet = new ProjectileClass(vec, w, h);
+        hasFired = false;
+        isJumping = false;
     }
 
     @Override
@@ -129,9 +131,9 @@ public class PlayerClass implements SwingEntityFramework {
         weapon = w;
     }
     
-    public void setFired(boolean b)
+    public void setFired(boolean ba)
     {
-        hasFired = b;
+        hasFired = ba;
     }
     
     public void setupSpriteSheet(SpriteSheet sprite)

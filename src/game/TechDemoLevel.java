@@ -11,7 +11,6 @@ package game;
 import com.Enjyn.Block;
 import com.Enjyn.PlayerClass;
 import com.Enjyn.BlockMap;
-import com.Enjyn.Camera;
 import com.Enjyn.EnemyClass;
 import com.Enjyn.ProjectileClass;
 import org.newdawn.slick.*;
@@ -150,7 +149,7 @@ public class TechDemoLevel extends BasicGameState {
                 g.drawString("4", player.groundPoly.getX() + player.getWidthOffset(), player.groundPoly.getY());
                 g.resetTransform();
         
-                System.out.println("PosX of Player" + player.getVector().getX());
+                System.out.println("Size of PlayerBulletArray" + String.valueOf(playerBullet.size()));
             }
         }
         

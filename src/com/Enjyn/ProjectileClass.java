@@ -26,6 +26,7 @@ public class ProjectileClass implements SwingEntityFramework {
         setVector(vec);
         setWidthOffset(w);
         setHeightOffset(h);
+        setupPolygon(vec, w, h);
         project = new ArrayList<>();
     }
 

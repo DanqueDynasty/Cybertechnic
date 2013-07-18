@@ -6,6 +6,7 @@ package com.Enjyn;
 
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.GameContainer;
 import java.util.ArrayList;
 
 /**
@@ -19,11 +20,13 @@ public class ProjectileClass implements SwingEntityFramework {
     public float hOffset;
     public Polygon poly;
     public float speed;
+    public boolean active;
     public ArrayList<ProjectileClass> project;
     
     public ProjectileClass(Vector2f vec, float w, float h)
     {
-        setVector(vec);
+        Vector2f indVec = new Vector2f(vec);
+        setVector(indVec);
         setWidthOffset(w);
         setHeightOffset(h);
         setupPolygon(vec, w, h);
@@ -59,6 +62,11 @@ public class ProjectileClass implements SwingEntityFramework {
         speed = s;
     }
     
+    public void setActive(boolean b)
+    {
+        active = b;
+    }
+    
     public void addBullet_Enemy(EnemyClass enem)
     {
         for(int i = 0; i < 1; i++)
@@ -73,10 +81,11 @@ public class ProjectileClass implements SwingEntityFramework {
     {
         for(int i = 0; i < 1; i++)
         {
-            Vector2f vec = player.getVector();
-            vec.y = player.getVector().getY() - (player.getHeightOffset()/2);
+            //Vector2f vec = player.getVector();
+            //vec.y = player.getVector().getY() + (player.getHeightOffset()/2);
             //project.add(new ProjectileClass(vec, 16, 16));
-            project.add(this);
+            project.add(new ProjectileClass(player.getVector(), this.getWidthOffset(), this.getHeightOffset()));
+            setActive(true);
         }
     }
     
@@ -105,14 +114,14 @@ public class ProjectileClass implements SwingEntityFramework {
         return project;
     }
     
-    public void update(int delta)
+    public void update(GameContainer gc, int delta)
     {
     
     }
     
     public void playerFired(boolean hasFired, PlayerClass player, int delta)
     {
-        hasFired = player.getFiredStatus();
+        hasFired = player.activeFire;
         if(hasFired)
         {
             for(int i = 0; i < project.size(); i++)
@@ -121,7 +130,7 @@ public class ProjectileClass implements SwingEntityFramework {
             {
                 case 0:
                     project.get(i).getVector().x -= speed * delta;
-                    project.get(i).getPolygon().setX(project.get(i).getVector().getX());
+                    project.get(i).getPolygon().setX(project.get(i).getVector().x);
                     break;
                 case 1:
                     project.get(i).getVector().x += speed * delta;
@@ -162,5 +171,10 @@ public class ProjectileClass implements SwingEntityFramework {
         hasFired = enem.getFiredStatus();
         
         
+    }
+    
+    public boolean getActiveStatus()
+    {
+        return active;
     }
 }

@@ -39,6 +39,7 @@ public class PlayerClass implements SwingEntityFramework {
     public int totalFrame;
     public int weapon;
     public boolean hasFired;
+    public boolean activeFire;
     public ProjectileClass bullet;
     
     public PlayerClass(Vector2f vec, float w, float h, float s, float v)
@@ -50,7 +51,8 @@ public class PlayerClass implements SwingEntityFramework {
         setVelocityf(v);
         setupPolygon(vec, w, h);
         setupFootpoly(vec, w, h);
-        bullet = new ProjectileClass(vec, w, h);
+        bullet = new ProjectileClass(vec, 16, 16);
+        bullet.setSpeed(.5f);
         hasFired = false;
         isJumping = false;
     }
@@ -131,6 +133,11 @@ public class PlayerClass implements SwingEntityFramework {
         weapon = w;
     }
     
+    public void setJumpStatus(boolean j)
+    {
+        isJumping = j;
+    }
+    
     public void setFired(boolean ba)
     {
         hasFired = ba;
@@ -181,7 +188,6 @@ public class PlayerClass implements SwingEntityFramework {
                 playerVec.x += speed * delta;
                 poly.setX(playerVec.x);
                 groundPoly.setX(playerVec.x);
-                setDirection(1);
             }
         }else{
             setKeyPressed(false);
@@ -193,6 +199,7 @@ public class PlayerClass implements SwingEntityFramework {
             poly.setX(playerVec.x);
             groundPoly.setX(playerVec.x);
             setKeyPressed(true);
+            setDirection(1);
             if(collidedWithTile(bmap) == true)
             {
                 playerVec.x -= speed * delta;
@@ -211,11 +218,11 @@ public class PlayerClass implements SwingEntityFramework {
 
         if(input.isKeyPressed(Input.KEY_SPACE) && isOnGround(bmap))
         {
-            isJumping = true;
+            setJumpStatus(true);
             setVelocityf((float)-5 * delta);
         }
         
-        if(isJumping)
+        if(getJumpStatus() == true)
         {
             this.velocityF += 1 * delta;
             playerVec.y += this.velocityF;
@@ -229,7 +236,7 @@ public class PlayerClass implements SwingEntityFramework {
             poly.setY((int)playerVec.y);
             groundPoly.setY((int)playerVec.y);
             System.out.println(isOnGround(bmap));
-            isJumping = false;
+            setJumpStatus(false);
         }
         
         if(isOnGround(bmap))
@@ -246,10 +253,11 @@ public class PlayerClass implements SwingEntityFramework {
         }
         
         //switch weapon method
+        activeFire = bullet.getActiveStatus();
         switch(getWeapon())
         {
             case 1:
-                bullet.playerFired(hasFired, this, delta);
+                bullet.playerFired(activeFire, this, delta);
                 break;
             default:
                 break;
@@ -351,10 +359,28 @@ public class PlayerClass implements SwingEntityFramework {
             }
         }
         return false;
+
+        
+        /*
+        for(int i = 0; i < bmap.entities.size(); i++)
+        {
+            Block tile = (Block) bmap.entities.get(i);
+            if((int)(groundPoly.getY()) == (int)tile.poly.getY())
+            {
+                return true;
+            }
+        }
+        return false;
+        */
     }
     
     public boolean getKeyPressed()
     {
         return keyPressed;
+    }
+    
+    public boolean getJumpStatus()
+    {
+        return isJumping;
     }
 }

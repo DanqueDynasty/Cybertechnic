@@ -114,9 +114,16 @@ public class ProjectileClass implements SwingEntityFramework {
         return project;
     }
     
-    public void update(GameContainer gc, int delta)
+    public void update(GameContainer gc, int delta, PlayerClass player)
     {
-    
+        for(int i = 0; i < project.size(); i++)
+        {
+            if(project.get(i).getPolygon().getX() >= gc.getWidth() &&
+                    project.get(i).getPolygon().getX() <= 0)
+            {
+                project.remove(i);
+            }
+        }
     }
     
     public void playerFired(boolean hasFired, PlayerClass player, int delta)

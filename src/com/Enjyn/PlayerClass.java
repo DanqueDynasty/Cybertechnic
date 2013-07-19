@@ -219,12 +219,12 @@ public class PlayerClass implements SwingEntityFramework {
         if(input.isKeyPressed(Input.KEY_SPACE) && isOnGround(bmap))
         {
             setJumpStatus(true);
-            setVelocityf((float)-5 * delta);
+            setVelocityf((float)-6 * delta);
         }
         
         if(getJumpStatus() == true)
         {
-            this.velocityF += 1 * delta;
+            this.velocityF -= 1 * delta;
             playerVec.y += this.velocityF;
             poly.setY((int)playerVec.y);
             groundPoly.setY((int)playerVec.y);
@@ -241,9 +241,17 @@ public class PlayerClass implements SwingEntityFramework {
         
         if(isOnGround(bmap))
         {
-            playerVec.y += (float)0 * delta;
-            poly.setY((int)playerVec.y);
-            groundPoly.setY((int)playerVec.y);
+            for(int i = 0; i < bmap.entities.size(); i++)
+            {
+                Block tile = (Block)bmap.entities.get(i);
+                if((int)playerVec.getY() <= (int)tile.poly.getY())
+                {
+                    playerVec.y += (float)0 * delta;
+                    poly.setY((int)playerVec.y);
+                    groundPoly.setY((int)playerVec.y);
+                }
+            }
+            
         }
         
         if(hasFired)

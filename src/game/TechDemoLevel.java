@@ -43,7 +43,7 @@ public class TechDemoLevel extends BasicGameState {
     {
         startPos = new Vector2f(100, 650);
         bMap = new BlockMap("./res/demoMap.tmx");
-        player = new PlayerClass(startPos, 64, 64, .25f, 0);
+        player = new PlayerClass(startPos, 64, 80, .25f, 0);
         player.setDirection(1);
         player.setWeapon(1);
         type1Enemy = new ArrayList<>();
@@ -103,6 +103,11 @@ public class TechDemoLevel extends BasicGameState {
             {
                 if(i < type1Enemy.size())
                     type1Enemy.get(i).update(player, bMap, delta);
+            }
+            
+            for(int i = 0; i < playerBullet.size(); i++)
+            {
+                playerBullet.get(i).update(gc, delta, player);
             }
             }
         }

@@ -28,6 +28,9 @@ public class EnemyClass implements SwingEntityFramework{
     public float posOffset;//will manage the position offset of the character, so no run and gun
     public float distanceOffset;
     public boolean hasFired;
+    public ProjectileClass bullet;
+    public float ctime;
+    public float timeSinceLastChange;
     
     public EnemyClass(Vector2f vec, float w, float h, float s, float v, int t)
     {
@@ -39,6 +42,10 @@ public class EnemyClass implements SwingEntityFramework{
         setupPolygon(vec, w, h);
         setupFootPoly(vec, w, h);
         setupViewPoly(vec, w, h);
+        bullet = new ProjectileClass(vec, 16, 16);
+        bullet.setSpeed(.5f);
+        ctime = 0; 
+        timeSinceLastChange = 0;
     }
 
     @Override
@@ -116,6 +123,11 @@ public class EnemyClass implements SwingEntityFramework{
     {
         health = h;
     }
+    
+    public void setFired(boolean fir)
+    {
+        hasFired = fir;
+    }   
     
     @Override
     public Vector2f getVector() {
@@ -218,6 +230,19 @@ public class EnemyClass implements SwingEntityFramework{
                 //set direction to go right
                 setDirection(1);
                 
+            }
+            
+            ctime +=(float)(delta)/1000;
+            
+            if( ctime > timeSinceLastChange + 10)
+            {
+                setFired(true);
+                ctime = 0;
+            }
+            if(hasFired)
+            {
+                bullet.addBullet_Enemy(this);
+                setFired(false);
             }
         }
     }

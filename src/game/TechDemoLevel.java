@@ -28,10 +28,9 @@ public class TechDemoLevel extends BasicGameState {
     private float mapX, mapY;
     private boolean isPause;
     private boolean isGameOver;
-    private EnemyClass testEnemy;
-    private ArrayList<ProjectileClass> proj;
     private ArrayList<EnemyClass> type1Enemy;
     private ArrayList<ProjectileClass> playerBullet;
+    private ArrayList<ProjectileClass> enemyBullet;
     
     public TechDemoLevel(int id)
     {
@@ -53,6 +52,8 @@ public class TechDemoLevel extends BasicGameState {
             type1Enemy.add(new EnemyClass(new Vector2f(800, 665), 64, 64, .25f, 5, 1));
             type1Enemy.get(i).setPosOffset(256);
             type1Enemy.get(i).setDisOffset(128);
+            type1Enemy.get(i).setType(0);
+            enemyBullet = type1Enemy.get(i).bullet.getProjectile();
         }
         type1Enemy.get(0).setVector(new Vector2f(800, 665));
         type1Enemy.get(1).setVector(new Vector2f(800, 430));
@@ -137,6 +138,10 @@ public class TechDemoLevel extends BasicGameState {
                 {
                     g.draw(type1Enemy.get(i).getPolygon());
                     g.draw(type1Enemy.get(i).viewPoly);
+                    for(int j = 0; j < enemyBullet.size(); j++)
+                    {
+                        g.draw(enemyBullet.get(j).getPolygon());
+                    }
                 }
                 
                 for(int i = 0; i < playerBullet.size(); i++)

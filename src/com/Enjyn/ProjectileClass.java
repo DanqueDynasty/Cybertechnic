@@ -71,9 +71,7 @@ public class ProjectileClass implements SwingEntityFramework {
     {
         for(int i = 0; i < 1; i++)
         {
-            Vector2f vec = enem.getVector();
-            vec.y = enem.getVector().getY() - (enem.getHeightOffset()/2);
-            project.add(new ProjectileClass(vec, 16, 16));
+            project.add(new ProjectileClass(enem.getVector(), 16, 16));
         }
     }
     
@@ -150,9 +148,9 @@ public class ProjectileClass implements SwingEntityFramework {
         }
     }
 
-    public void enemyFired_bullet(boolean hasFired, EnemyClass enem, PlayerClass player, int delta)
+    public void enemyFired_bullet(boolean hasFired, EnemyClass enem, int delta)
     {
-        hasFired = enem.getFiredStatus();
+        hasFired = enem.getActiveFire();
         if(hasFired)
         {
             for(int i = 0; i < project.size(); i++)
@@ -162,6 +160,7 @@ public class ProjectileClass implements SwingEntityFramework {
                 case 0:
                     project.get(i).getVector().x -= speed * delta;
                     project.get(i).getPolygon().setX(project.get(i).getVector().getX());
+                    break;
                 case 1:
                     project.get(i).getVector().x += speed * delta;
                     project.get(i).getPolygon().setX(project.get(i).getVector().getX());

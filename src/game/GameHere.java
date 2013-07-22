@@ -14,7 +14,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
 public class GameHere extends StateBasedGame{
-    public static final String GAME_NAME = "CyberTechnic----Build 3";
+    public static final String GAME_NAME = "RaveWave---Build 45";
     public static final int DEMO_LEVEL = 0;
     
     public GameHere(String name)

@@ -86,10 +86,10 @@ public class PlayerClass implements SwingEntityFramework {
     {
         groundPoly = new Polygon(new float[]
         {
-            vec.x, vec.y - 2,
+            vec.x, vec.y - 3,
             vec.x, vec.y + hOffset,
             vec.x + wOffset, vec.y + hOffset,
-            vec.x + wOffset, vec.y -2
+            vec.x + wOffset, vec.y -3
         });
     }
     

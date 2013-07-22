@@ -4,6 +4,7 @@
  */
 package com.Enjyn;
 
+import java.util.ArrayList;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -28,9 +29,11 @@ public class EnemyClass implements SwingEntityFramework{
     public float posOffset;//will manage the position offset of the character, so no run and gun
     public float distanceOffset;
     public boolean hasFired;
+    public boolean activeFire;
     public ProjectileClass bullet;
     public float ctime;
     public float timeSinceLastChange;
+    
     
     public EnemyClass(Vector2f vec, float w, float h, float s, float v, int t)
     {
@@ -129,6 +132,11 @@ public class EnemyClass implements SwingEntityFramework{
         hasFired = fir;
     }   
     
+    public void setActiveFire(boolean af)
+    {
+        activeFire = af;
+    }
+    
     @Override
     public Vector2f getVector() {
         return posVec;
@@ -185,6 +193,16 @@ public class EnemyClass implements SwingEntityFramework{
         return hasFired;
     }
     
+    public boolean getActiveFire()
+    {
+        return activeFire;
+    }
+    
+    public int getType()
+    {
+        return type;
+    }
+    
     public void update(PlayerClass player,BlockMap bmap, int delta)
     {
             //code here for how enemy will behave
@@ -234,7 +252,7 @@ public class EnemyClass implements SwingEntityFramework{
             
             ctime +=(float)(delta)/1000;
             
-            if( ctime > timeSinceLastChange + 10)
+            if( ctime > timeSinceLastChange + 5)
             {
                 setFired(true);
                 ctime = 0;
@@ -243,6 +261,19 @@ public class EnemyClass implements SwingEntityFramework{
             {
                 bullet.addBullet_Enemy(this);
                 setFired(false);
+            }
+            
+            activeFire = bullet.getActiveStatus();
+            switch(getType())
+            {
+                case 0:
+                    bullet.enemyFired_bullet(hasFired, this, delta);
+                    break;
+                case 1:
+                    
+                    break;
+                default:
+                    break;
             }
         }
     }

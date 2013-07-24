@@ -247,12 +247,11 @@ public class EnemyClass implements SwingEntityFramework{
                 viewPoly.setX(posVec.x - posOffset);
                 //set direction to go right
                 setDirection(1);
-                
             }
             
             ctime +=(float)(delta)/1000;
             
-            if( ctime > timeSinceLastChange + 5)
+            if( ctime > timeSinceLastChange + 2)
             {
                 setFired(true);
                 ctime = 0;
@@ -263,6 +262,7 @@ public class EnemyClass implements SwingEntityFramework{
                 setFired(false);
             }
             
+            //
             activeFire = bullet.getActiveStatus();
             switch(getType())
             {

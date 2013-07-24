@@ -72,6 +72,7 @@ public class ProjectileClass implements SwingEntityFramework {
         for(int i = 0; i < 1; i++)
         {
             project.add(new ProjectileClass(enem.getVector(), 16, 16));
+            setActive(true);
         }
     }
     
@@ -112,6 +113,11 @@ public class ProjectileClass implements SwingEntityFramework {
         return project;
     }
     
+    public float getSpeed()
+    {
+        return speed;
+    }
+    
     public void update(GameContainer gc, int delta, PlayerClass player)
     {
         for(int i = 0; i < project.size(); i++)
@@ -147,12 +153,48 @@ public class ProjectileClass implements SwingEntityFramework {
             }
         }
     }
+    
+    public void playerSwing(PlayerClass player, int delta)
+    {
+        boolean hasFired = player.activeFire;
+        double angle = 0;
+        
+        if(angle != 360)
+        {
+                angle++;
+        }else{
+                angle = 0;
+        }
+        if(hasFired)
+        {
+            
+            for(int i = 0; i < project.size(); i++)
+            {
+                switch(player.getDirection())
+                {
+                    case 0:
+                        project.get(i).getVector().x = (float)(player.getPolygon().getCenterX() + Math.cos(angle) * 2);
+                        project.get(i).getVector().y = (float)(player.getPolygon().getCenterY() + Math.sin(angle) * 2);
+                        project.get(i).getPolygon().setLocation(project.get(i).getVector().x, project.get(i).getVector().y);
+                        break;
+                    case 1:
+                        project.get(i).getVector().x = (float)(player.getPolygon().getCenterX() - Math.cos(angle) * 2);
+                        project.get(i).getVector().y = (float)(player.getPolygon().getCenterY() - Math.sin(angle) * 2);
+                        project.get(i).getPolygon().setLocation(project.get(i).getVector().getX(), project.get(i).getVector().getY());
+                    default:
+                        break;
+                }
+            }
+        }
+    }
 
     public void enemyFired_bullet(boolean hasFired, EnemyClass enem, int delta)
     {
-        hasFired = enem.getActiveFire();
+        hasFired = enem.activeFire;
+        
         if(hasFired)
         {
+            System.out.println("I Am running");
             for(int i = 0; i < project.size(); i++)
             {
                 switch(enem.getDirection())
@@ -172,10 +214,37 @@ public class ProjectileClass implements SwingEntityFramework {
         }
     }
     
-    public void enemyFired_Swing(boolean hasFired, EnemyClass enem, PlayerClass player, int delta)
+    public void enemyFired_Swing(boolean hasFired, EnemyClass enem, int delta)
     {
-        hasFired = enem.getFiredStatus();
-        
+        hasFired = enem.activeFire;
+        double angle = 0;
+        if(angle != 360)
+        {
+            angle++;
+            if(angle == 360)
+            {
+                angle = 0;
+            }
+        }
+        if(hasFired)
+        {
+            for(int i = 0; i < project.size(); i++)
+            {
+                switch(enem.getDirection())
+                {
+                    case 0:
+                        project.get(i).getVector().x = (float)(enem.getPolygon().getCenterX() + Math.cos(angle) * 5);
+                        project.get(i).getVector().y = (float)(enem.getPolygon().getCenterY() + Math.sin(angle) * 5);
+                        break;
+                    case 1:
+                        project.get(i).getVector().x = (float)(enem.getPolygon().getCenterX() - Math.cos(angle) * 5);
+                        project.get(i).getVector().y = (float)(enem.getPolygon().getCenterX() - Math.sin(angle) * 5);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
         
     }
     

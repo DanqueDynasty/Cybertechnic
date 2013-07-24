@@ -49,7 +49,7 @@ public class TechDemoLevel extends BasicGameState {
         playerBullet = player.bullet.getProjectile();
         for(int i = 0; i < 3; i++)
         {
-            type1Enemy.add(new EnemyClass(new Vector2f(800, 665), 64, 64, .25f, 5, 1));
+            type1Enemy.add(new EnemyClass(new Vector2f(800, 665), 64, 80, .25f, 5, 1));
             type1Enemy.get(i).setPosOffset(256);
             type1Enemy.get(i).setDisOffset(128);
             type1Enemy.get(i).setType(0);
@@ -141,6 +141,7 @@ public class TechDemoLevel extends BasicGameState {
                     for(int j = 0; j < enemyBullet.size(); j++)
                     {
                         g.draw(enemyBullet.get(j).getPolygon());
+                        System.out.println("Speed Of Projectile:" + enemyBullet.get(j).speed);
                     }
                 }
                 
@@ -159,7 +160,8 @@ public class TechDemoLevel extends BasicGameState {
                 g.drawString("4", player.groundPoly.getX() + player.getWidthOffset(), player.groundPoly.getY());
                 g.resetTransform();
         
-                System.out.println("Size of PlayerBulletArray" + String.valueOf(playerBullet.size()));
+                
+                //System.out.println("Size of PlayerBulletArray" + String.valueOf(playerBullet.size()));
             }
         }
         

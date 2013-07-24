@@ -212,14 +212,23 @@ public class PlayerClass implements SwingEntityFramework {
         
         if(input.isKeyPressed(Input.KEY_ENTER) && isOnGround(bmap))
         {
-            setFired(true);
-            
+            setFired(true); 
         }
 
         if(input.isKeyPressed(Input.KEY_SPACE) && isOnGround(bmap))
         {
             setJumpStatus(true);
             setVelocityf((float)-6 * delta);
+        }
+        
+        if(input.isKeyPressed(Input.KEY_1))
+        {
+            setWeapon(1);
+        }
+        
+        if(input.isKeyPressed(Input.KEY_2))
+        {
+            setWeapon(2);
         }
         
         if(getJumpStatus() == true)
@@ -266,6 +275,9 @@ public class PlayerClass implements SwingEntityFramework {
         {
             case 1:
                 bullet.playerFired(activeFire, this, delta);
+                break;
+            case 2:
+                bullet.playerSwing(this, delta);
                 break;
             default:
                 break;

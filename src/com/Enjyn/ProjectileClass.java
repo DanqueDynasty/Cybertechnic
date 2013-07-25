@@ -173,13 +173,13 @@ public class ProjectileClass implements SwingEntityFramework {
                 switch(player.getDirection())
                 {
                     case 0:
-                        project.get(i).getVector().x = (float)(player.getPolygon().getCenterX() + Math.cos(angle) * 2);
-                        project.get(i).getVector().y = (float)(player.getPolygon().getCenterY() + Math.sin(angle) * 2);
+                        project.get(i).getVector().x = (float)(player.getPolygon().getCenterX() + Math.cos(angle) * 1);
+                        project.get(i).getVector().y = (float)(player.getPolygon().getCenterY() + Math.sin(angle) * 1);
                         project.get(i).getPolygon().setLocation(project.get(i).getVector().x, project.get(i).getVector().y);
                         break;
                     case 1:
-                        project.get(i).getVector().x = (float)(player.getPolygon().getCenterX() - Math.cos(angle) * 2);
-                        project.get(i).getVector().y = (float)(player.getPolygon().getCenterY() - Math.sin(angle) * 2);
+                        project.get(i).getVector().x = (float)(player.getPolygon().getCenterX() - Math.cos(angle) * 1);
+                        project.get(i).getVector().y = (float)(player.getPolygon().getCenterY() - Math.sin(angle) * 1);
                         project.get(i).getPolygon().setLocation(project.get(i).getVector().getX(), project.get(i).getVector().getY());
                     default:
                         break;

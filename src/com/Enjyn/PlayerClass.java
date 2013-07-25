@@ -86,10 +86,10 @@ public class PlayerClass implements SwingEntityFramework {
     {
         groundPoly = new Polygon(new float[]
         {
-            vec.x, vec.y - 3,
+            vec.x, vec.y + h - 3,
             vec.x, vec.y + hOffset,
             vec.x + wOffset, vec.y + hOffset,
-            vec.x + wOffset, vec.y -3
+            vec.x + wOffset, vec.y + h - 3
         });
     }
     
@@ -235,16 +235,18 @@ public class PlayerClass implements SwingEntityFramework {
         {
             this.velocityF -= 1 * delta;
             playerVec.y += this.velocityF;
+            float offVec = playerVec.getY() + hOffset;
             poly.setY((int)playerVec.y);
-            groundPoly.setY((int)playerVec.y);
+            groundPoly.setY(offVec);
         }
         
         if(!isOnGround(bmap))
         {
             playerVec.y += (float)0.2 * delta;
-            poly.setY((int)playerVec.y);
-            groundPoly.setY((int)playerVec.y);
-            System.out.println(isOnGround(bmap));
+            float offVec = playerVec.getY() + hOffset;
+            poly.setY((int)playerVec.y - hOffset);
+            groundPoly.setY(offVec);
+            //System.out.println(isOnGround(bmap));
             setJumpStatus(false);
         }
         
@@ -256,8 +258,9 @@ public class PlayerClass implements SwingEntityFramework {
                 if((int)playerVec.getY() <= (int)tile.poly.getY())
                 {
                     playerVec.y += (float)0 * delta;
-                    poly.setY((int)playerVec.y);
-                    groundPoly.setY((int)playerVec.y);
+                    float offVec = playerVec.getY() + hOffset;
+                    poly.setY((int)playerVec.y - hOffset);
+                    groundPoly.setY(offVec);
                 }
             }
             

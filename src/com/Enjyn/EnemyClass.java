@@ -270,7 +270,7 @@ public class EnemyClass implements SwingEntityFramework{
                     bullet.enemyFired_bullet(hasFired, this, delta);
                     break;
                 case 1:
-                    
+                    bullet.enemyFired_Swing(hasFired, this, delta);
                     break;
                 default:
                     break;

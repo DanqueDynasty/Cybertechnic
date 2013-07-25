@@ -21,10 +21,12 @@ public class GameHere extends StateBasedGame{
     {
         super(name);
         this.addState(new TechDemoLevel(DEMO_LEVEL));
+        //this.addState(new TestLevel(DEMO_LEVEL));
     }
     
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
+        //this.getState(DEMO_LEVEL).init(gc, this);
         this.getState(DEMO_LEVEL).init(gc, this);
         this.enterState(DEMO_LEVEL);
     }

@@ -24,6 +24,7 @@ public class PlayerClass implements SwingEntityFramework {
     public float hOffset;
     public Polygon poly;
     public Polygon groundPoly;
+    public Polygon ceilingPoly;
     public float speed;
     public float velocityF;
     public boolean keyPressed;
@@ -51,6 +52,7 @@ public class PlayerClass implements SwingEntityFramework {
         setVelocityf(v);
         setupPolygon(vec, w, h);
         setupFootpoly(vec, w, h);
+        setupCeilingPoly(vec, w, h);
         bullet = new ProjectileClass(vec, 16, 16);
         bullet.setSpeed(.5f);
         hasFired = false;
@@ -90,6 +92,16 @@ public class PlayerClass implements SwingEntityFramework {
             vec.x, vec.y + hOffset,
             vec.x + wOffset, vec.y + hOffset,
             vec.x + wOffset, vec.y + h - 3
+        });
+    }
+    
+    public void setupCeilingPoly(Vector2f vec, float w, float h)
+    {
+        ceilingPoly = new Polygon(new float[]{
+            vec.x, vec.y,
+            vec.x, vec.y - 3,
+            vec.x + w, vec.y - 3,
+            vec.x + w, vec.y
         });
     }
     
@@ -181,6 +193,7 @@ public class PlayerClass implements SwingEntityFramework {
             playerVec.x -= speed * delta;
             poly.setX(playerVec.x);
             groundPoly.setX(playerVec.x);
+            ceilingPoly.setX(playerVec.x);
             setDirection(0);
             setKeyPressed(true);
             if(collidedWithTile(bmap) == true)
@@ -188,6 +201,7 @@ public class PlayerClass implements SwingEntityFramework {
                 playerVec.x += speed * delta;
                 poly.setX(playerVec.x);
                 groundPoly.setX(playerVec.x);
+                ceilingPoly.setX(playerVec.x);
             }
         }else{
             setKeyPressed(false);
@@ -198,6 +212,7 @@ public class PlayerClass implements SwingEntityFramework {
             playerVec.x += speed * delta;
             poly.setX(playerVec.x);
             groundPoly.setX(playerVec.x);
+            ceilingPoly.setX(playerVec.x);
             setKeyPressed(true);
             setDirection(1);
             if(collidedWithTile(bmap) == true)
@@ -205,6 +220,7 @@ public class PlayerClass implements SwingEntityFramework {
                 playerVec.x -= speed * delta;
                 poly.setX(playerVec.x);
                 groundPoly.setX(playerVec.x);
+                ceilingPoly.setX(playerVec.x);
             }
         }else{
             setKeyPressed(false);
@@ -238,14 +254,16 @@ public class PlayerClass implements SwingEntityFramework {
             float offVec = playerVec.getY() + hOffset;
             poly.setY((int)playerVec.y);
             groundPoly.setY(offVec);
+            ceilingPoly.setY(playerVec.y);
         }
         
         if(!isOnGround(bmap))
         {
             playerVec.y += (float)0.2 * delta;
             float offVec = playerVec.getY() + hOffset;
-            poly.setY((int)playerVec.y - hOffset);
+            poly.setY((int)playerVec.y);
             groundPoly.setY(offVec);
+            ceilingPoly.setY(playerVec.y);
             //System.out.println(isOnGround(bmap));
             setJumpStatus(false);
         }
@@ -259,11 +277,16 @@ public class PlayerClass implements SwingEntityFramework {
                 {
                     playerVec.y += (float)0 * delta;
                     float offVec = playerVec.getY() + hOffset;
-                    poly.setY((int)playerVec.y - hOffset);
+                    poly.setY((int)playerVec.y);
                     groundPoly.setY(offVec);
+                    ceilingPoly.setY(playerVec.y);
                 }
-            }
-            
+            }          
+        }
+        
+        if(isCeilingTouched(bmap))
+        {
+            setJumpStatus(false);
         }
         
         if(hasFired)
@@ -314,6 +337,11 @@ public class PlayerClass implements SwingEntityFramework {
     public Polygon getFootPoly()
     {
         return groundPoly;
+    }
+    
+    public Polygon getCeilingPoly()
+    {
+        return ceilingPoly;
     }
     
     public float getVelocityf()
@@ -395,6 +423,19 @@ public class PlayerClass implements SwingEntityFramework {
         }
         return false;
         */
+    }
+    
+    public boolean isCeilingTouched(BlockMap bmap)
+    {
+        for(int i = 0; i < bmap.entities.size(); i++)
+        {
+            Block tile = (Block)bmap.entities.get(i);
+            if(ceilingPoly.intersects(tile.poly))
+            {
+                return true;
+            }
+        }
+        return false;
     }
     
     public boolean getKeyPressed()

@@ -133,7 +133,7 @@ public class TechDemoLevel extends BasicGameState {
                 }
                 g.setDrawMode(Graphics.MODE_SCREEN);
                 g.setColor(Color.white);
-                //g.draw(player.getPolygon());
+                g.draw(player.getPolygon());
                 for(int i = 0; i < type1Enemy.size(); i++)
                 {
                     g.draw(type1Enemy.get(i).getPolygon());
@@ -154,10 +154,10 @@ public class TechDemoLevel extends BasicGameState {
                 g.draw(player.groundPoly);
                 g.setColor(Color.cyan);
                 g.setDrawMode(Graphics.MODE_NORMAL);
-                g.drawString("1", player.groundPoly.getX(), player.groundPoly.getY());
-                g.drawString("2", player.groundPoly.getX(), player.groundPoly.getY() + player.getHeightOffset() - 5);
-                g.drawString("3", player.groundPoly.getX() + player.getWidthOffset(), player.groundPoly.getY() + player.getHeightOffset() - 5);
-                g.drawString("4", player.groundPoly.getX() + player.getWidthOffset(), player.groundPoly.getY());
+                g.drawString("1", player.getPolygon().getX(), player.getPolygon().getY());
+                g.drawString("2", player.getPolygon().getX(), player.getPolygon().getY() + player.getPolygon().getHeight());
+                g.drawString("3", player.getPolygon().getX() + player.getPolygon().getWidth(), player.getPolygon().getY() + player.getPolygon().getHeight());
+                g.drawString("4", player.getPolygon().getX() + player.getWidthOffset(), player.getPolygon().getY());
                 g.resetTransform();
         
                 

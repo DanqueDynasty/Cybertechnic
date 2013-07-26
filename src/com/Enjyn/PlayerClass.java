@@ -231,7 +231,7 @@ public class PlayerClass implements SwingEntityFramework {
             setFired(true); 
         }
 
-        if(input.isKeyPressed(Input.KEY_SPACE) && isOnGround(bmap))
+        if(input.isKeyPressed(Input.KEY_SPACE) && isOnGround(bmap) && !isCeilingTouched(bmap))
         {
             setJumpStatus(true);
             setVelocityf((float)-6 * delta);
@@ -287,6 +287,11 @@ public class PlayerClass implements SwingEntityFramework {
         if(isCeilingTouched(bmap))
         {
             setJumpStatus(false);
+            playerVec.y += (float)0.2 * delta;
+            float offVec = playerVec.getY() + hOffset;
+            poly.setY(playerVec.y);
+            groundPoly.setY(offVec);
+            ceilingPoly.setY(playerVec.y);
         }
         
         if(hasFired)

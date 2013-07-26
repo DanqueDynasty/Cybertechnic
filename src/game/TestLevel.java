@@ -75,7 +75,9 @@ public class TestLevel extends BasicGameState {
             {
                 bmap.tmap.render(0, 0);
                 //temporary
+                g.draw(player.getCeilingPoly());
                 g.draw(player.getFootPoly());
+                g.draw(player.getPolygon());
             }
         }
     }

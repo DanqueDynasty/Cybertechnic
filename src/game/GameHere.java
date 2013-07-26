@@ -14,21 +14,28 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
 public class GameHere extends StateBasedGame{
-    public static final String GAME_NAME = "RaveWave---Build 45";
-    public static final int DEMO_LEVEL = 0;
+    public static final String GAME_NAME = "RaveWave---Build 96";
+    //public static final int DEMO_LEVEL = 0;
+    public static final int MENU_LEVEL = 0;
+    public static final int CHARCONFIG_SREEN = 1;
     
     public GameHere(String name)
     {
         super(name);
-        this.addState(new TechDemoLevel(DEMO_LEVEL));
+        //this.addState(new TechDemoLevel(DEMO_LEVEL));
       //  this.addState(new TestLevel(DEMO_LEVEL));
+        this.addState(new HomeScreen(MENU_LEVEL));
+        this.addState(new setupChar(CHARCONFIG_SREEN));
     }
     
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
         //this.getState(DEMO_LEVEL).init(gc, this);
-        this.getState(DEMO_LEVEL).init(gc, this);
-        this.enterState(DEMO_LEVEL);
+        //this.getState(DEMO_LEVEL).init(gc, this);
+        //this.enterState(DEMO_LEVEL);
+        this.getState(MENU_LEVEL).init(gc, this);
+        this.getState(CHARCONFIG_SREEN).init(gc, this);
+        this.enterState(MENU_LEVEL);
     }
     
     public static void main(String [] args)

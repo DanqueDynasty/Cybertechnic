@@ -314,7 +314,7 @@ public class PlayerClass implements SwingEntityFramework {
             groundPoly.setY(offVec);
             ceilingPoly.setY(playerVec.y);
         }
-        
+        /*
         if(hasFired)
         { 
             bullet.addBullet_Player(this);
@@ -334,6 +334,8 @@ public class PlayerClass implements SwingEntityFramework {
             default:
                 break;
         }
+        * 
+        */
     }
     @Override
     public Vector2f getVector() {

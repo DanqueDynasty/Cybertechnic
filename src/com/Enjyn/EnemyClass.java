@@ -33,6 +33,8 @@ public class EnemyClass implements SwingEntityFramework{
     public ProjectileClass bullet;
     public float ctime;
     public float timeSinceLastChange;
+    public static final int LEFT = 0;
+   public static final int RIGHT = 1;
     
     
     public EnemyClass(Vector2f vec, float w, float h, float s, float v, int t)

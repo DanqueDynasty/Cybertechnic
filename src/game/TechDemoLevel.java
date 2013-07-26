@@ -44,8 +44,8 @@ public class TechDemoLevel extends BasicGameState {
         bMap = new BlockMap("./res/demoMap.tmx");
         player = new PlayerClass(startPos, 64, 80, .25f, 0);
         player.setDirection(1);
-        player.setWeapon(1);
-        type1Enemy = new ArrayList<>();
+        player.setWeaponID(0);
+        type1Enemy = new ArrayList<EnemyClass>();
         playerBullet = player.bullet.getProjectile();
         for(int i = 0; i < 3; i++)
         {
@@ -72,6 +72,7 @@ public class TechDemoLevel extends BasicGameState {
             if(!isPause)
             {
                 player.setControl(gc, delta, bMap); 
+                player.update(delta);
                 if(player.getVector().getX() >= 512 && player.getVector().getX() <= 1536)
                 {
                     if(gc.getInput().isKeyDown(Input.KEY_D))
@@ -125,6 +126,7 @@ public class TechDemoLevel extends BasicGameState {
                 g.setDrawMode(Graphics.MODE_NORMAL);
                 g.translate(mapX, mapY);
                 bMap.tmap.render(0, 0);
+                player.render(g);
                 for(int i = 0; i < bMap.entities.size(); i++)
                 {
                     Block tile = (Block) bMap.entities.get(i);

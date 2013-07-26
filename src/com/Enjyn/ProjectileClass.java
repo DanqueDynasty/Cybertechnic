@@ -30,7 +30,7 @@ public class ProjectileClass implements SwingEntityFramework {
         setWidthOffset(w);
         setHeightOffset(h);
         setupPolygon(vec, w, h);
-        project = new ArrayList<>();
+        project = new ArrayList<ProjectileClass>();
     }
 
     public void setVector(Vector2f vec) {

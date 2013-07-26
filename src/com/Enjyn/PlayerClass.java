@@ -4,10 +4,12 @@
  */
 package com.Enjyn;
 
+import java.util.ArrayList;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.Image;
 
@@ -17,6 +19,10 @@ import org.newdawn.slick.Image;
  * This class is designed to handle the 
  */
 public class PlayerClass implements SwingEntityFramework {
+    
+    public static final int LEFT = 0;
+    public static final int RIGHT = 1;
+    
     
     public Vector2f playerVec;
     public Vector2f velocityVec;
@@ -38,10 +44,14 @@ public class PlayerClass implements SwingEntityFramework {
     public float timeOfLastFrameChage;
     public int currentFrame;
     public int totalFrame;
-    public int weapon;
+    public int weaponID;    //used to be "weapon", changed so that "weapon" could be the name of the actual weapon arraylist
     public boolean hasFired;
     public boolean activeFire;
     public ProjectileClass bullet;
+    
+    private ArrayList<Weapon> weapon;
+    
+    
     
     public PlayerClass(Vector2f vec, float w, float h, float s, float v)
     {
@@ -57,6 +67,8 @@ public class PlayerClass implements SwingEntityFramework {
         bullet.setSpeed(.5f);
         hasFired = false;
         isJumping = false;
+        weapon = new ArrayList<Weapon>();
+        weapon.add(new Gun());
     }
 
     @Override
@@ -128,6 +140,7 @@ public class PlayerClass implements SwingEntityFramework {
     public void setDirection(int d)
     {
         dir = d;
+        weapon.get(getWeaponID()).setDirection(d);
     }
     
     public void setGender(int g)
@@ -140,9 +153,9 @@ public class PlayerClass implements SwingEntityFramework {
         health = h;
     }
     
-    public void setWeapon(int w)
+    public void setWeaponID(int w)
     {
-        weapon = w;
+        weaponID = w;
     }
     
     public void setJumpStatus(boolean j)
@@ -184,12 +197,18 @@ public class PlayerClass implements SwingEntityFramework {
         int d = getDirection();
         masterImage = masterSprite.getSprite(currentFrame, d);
     }
-    
+    public void update(int delta){
+        weapon.get(getWeaponID()).update(delta);
+    }
+    public void render(Graphics g){
+        weapon.get(getWeaponID()).render(g);
+    }
     public void setControl(GameContainer gc, int delta, BlockMap bmap)
     {
         Input input = gc.getInput();
         if(input.isKeyDown(Input.KEY_A))
         {
+            setDirection(LEFT);
             playerVec.x -= speed * delta;
             poly.setX(playerVec.x);
             groundPoly.setX(playerVec.x);
@@ -209,6 +228,7 @@ public class PlayerClass implements SwingEntityFramework {
         
         if(input.isKeyDown(Input.KEY_D))
         {
+            setDirection(RIGHT);
             playerVec.x += speed * delta;
             poly.setX(playerVec.x);
             groundPoly.setX(playerVec.x);
@@ -228,7 +248,8 @@ public class PlayerClass implements SwingEntityFramework {
         
         if(input.isKeyPressed(Input.KEY_ENTER) && isOnGround(bmap))
         {
-            setFired(true); 
+           weapon.get(getWeaponID()).use(poly.getX(), poly.getY()); 
+           // setFired(true); 
         }
 
         if(input.isKeyPressed(Input.KEY_SPACE) && isOnGround(bmap) && !isCeilingTouched(bmap))
@@ -239,12 +260,12 @@ public class PlayerClass implements SwingEntityFramework {
         
         if(input.isKeyPressed(Input.KEY_1))
         {
-            setWeapon(1);
+            setWeaponID(0);
         }
         
         if(input.isKeyPressed(Input.KEY_2))
         {
-            setWeapon(2);
+            setWeaponID(1);
         }
         
         if(getJumpStatus() == true)
@@ -302,7 +323,7 @@ public class PlayerClass implements SwingEntityFramework {
         
         //switch weapon method
         activeFire = bullet.getActiveStatus();
-        switch(getWeapon())
+        switch(getWeaponID())
         {
             case 1:
                 bullet.playerFired(activeFire, this, delta);
@@ -364,9 +385,9 @@ public class PlayerClass implements SwingEntityFramework {
         return gen;
     }
     
-    public int getWeapon()
+    public int getWeaponID()
     {
-        return weapon;
+        return weaponID;
     }
     
     public int getHealth()

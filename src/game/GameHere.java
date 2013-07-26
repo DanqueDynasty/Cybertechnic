@@ -20,8 +20,8 @@ public class GameHere extends StateBasedGame{
     public GameHere(String name)
     {
         super(name);
-        //this.addState(new TechDemoLevel(DEMO_LEVEL));
-        this.addState(new TestLevel(DEMO_LEVEL));
+        this.addState(new TechDemoLevel(DEMO_LEVEL));
+      //  this.addState(new TestLevel(DEMO_LEVEL));
     }
     
     @Override

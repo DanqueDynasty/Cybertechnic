@@ -213,7 +213,7 @@ public class PlayerClass implements SwingEntityFramework {
             poly.setX(playerVec.x);
             groundPoly.setX(playerVec.x);
             ceilingPoly.setX(playerVec.x);
-            setDirection(0);
+            //setDirection(0);
             setKeyPressed(true);
             if(collidedWithTile(bmap) == true)
             {
@@ -234,7 +234,7 @@ public class PlayerClass implements SwingEntityFramework {
             groundPoly.setX(playerVec.x);
             ceilingPoly.setX(playerVec.x);
             setKeyPressed(true);
-            setDirection(1);
+            //setDirection(1);
             if(collidedWithTile(bmap) == true)
             {
                 playerVec.x -= speed * delta;

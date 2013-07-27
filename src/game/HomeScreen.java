@@ -51,11 +51,17 @@ public class HomeScreen extends BasicGameState{
         {
             if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
             {
-                
+                //go to overhead gui class
             }
         }
         
-        
+        if(input.getMouseX() >= 64 && input.getMouseY() <= 64 + helpImage.getWidth() && input.getMouseY() >= 276 && input.getMouseY() <= 276 + helpImage.getHeight())
+        {
+            if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+            {
+                //go to help state
+            }
+        }
         
         //handle the quit button
         if(input.getMouseX()  >= 64 && input.getMouseX() <= 64 + quitImage.getWidth() && input.getMouseY() >= 202 && input.getMouseY() <= 350 + quitImage.getHeight())

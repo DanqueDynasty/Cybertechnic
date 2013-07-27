@@ -7,6 +7,7 @@ package com.Enjyn;
 import java.util.ArrayList;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.Graphics;
 
 /**
  *
@@ -33,8 +34,11 @@ public class EnemyClass implements SwingEntityFramework{
     public ProjectileClass bullet;
     public float ctime;
     public float timeSinceLastChange;
+    public int weaponID;
     public static final int LEFT = 0;
-   public static final int RIGHT = 1;
+    public static final int RIGHT = 1;
+    
+    private ArrayList<Weapon> weapon;
     
     
     public EnemyClass(Vector2f vec, float w, float h, float s, float v, int t)
@@ -51,6 +55,8 @@ public class EnemyClass implements SwingEntityFramework{
         bullet.setSpeed(.5f);
         ctime = 0; 
         timeSinceLastChange = 0;
+        weapon = new ArrayList<Weapon>();
+        weapon.add(new Gun());
     }
 
     @Override
@@ -117,6 +123,7 @@ public class EnemyClass implements SwingEntityFramework{
     public void setDirection(int d)
     {
         direction = d;
+        weapon.get(getWeaponID()).setDirection(d);
     }
     
     public void setType(int t)
@@ -137,6 +144,11 @@ public class EnemyClass implements SwingEntityFramework{
     public void setActiveFire(boolean af)
     {
         activeFire = af;
+    }
+    
+    public void setWeaponID(int w)
+    {
+        weaponID = w;
     }
     
     @Override
@@ -162,6 +174,11 @@ public class EnemyClass implements SwingEntityFramework{
     public int getDirection()
     {
         return direction;
+    }
+    
+    public int getWeaponID()
+    {
+        return weaponID;
     }
     
     public void setPosOffset(float p)
@@ -260,11 +277,14 @@ public class EnemyClass implements SwingEntityFramework{
             }
             if(hasFired)
             {
-                bullet.addBullet_Enemy(this);
+                //bullet.addBullet_Enemy(this);
+                weapon.get(weaponID).use(poly.getX(), poly.getY());
                 setFired(false);
             }
             
-            //
+            weapon.get(weaponID).update(delta);
+            
+            /*
             activeFire = bullet.getActiveStatus();
             switch(getType())
             {
@@ -277,6 +297,13 @@ public class EnemyClass implements SwingEntityFramework{
                 default:
                     break;
             }
+            * 
+            */
         }
+    }
+    
+    public void render(Graphics g)
+    {
+        weapon.get(getWeaponID()).render(g);
     }
 }

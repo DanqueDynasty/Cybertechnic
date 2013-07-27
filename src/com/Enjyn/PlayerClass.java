@@ -48,6 +48,7 @@ public class PlayerClass implements SwingEntityFramework {
     public boolean hasFired;
     public boolean activeFire;
     public ProjectileClass bullet;
+    public int animCall;
     
     private ArrayList<Weapon> weapon;
     

@@ -18,6 +18,7 @@ public class GameHere extends StateBasedGame{
     //public static final int DEMO_LEVEL = 0;
     public static final int MENU_LEVEL = 0;
     public static final int CHARCONFIG_SREEN = 1;
+    public static final int LEVEL_01 = 2;
     
     public GameHere(String name)
     {
@@ -26,6 +27,7 @@ public class GameHere extends StateBasedGame{
       //  this.addState(new TestLevel(DEMO_LEVEL));
         this.addState(new HomeScreen(MENU_LEVEL));
         this.addState(new setupChar(CHARCONFIG_SREEN));
+        this.addState(new Level_01(LEVEL_01));
     }
     
     @Override
@@ -35,6 +37,7 @@ public class GameHere extends StateBasedGame{
         //this.enterState(DEMO_LEVEL);
         this.getState(MENU_LEVEL).init(gc, this);
         this.getState(CHARCONFIG_SREEN).init(gc, this);
+        this.getState(LEVEL_01).init(gc, this);
         this.enterState(MENU_LEVEL);
     }
     

@@ -29,6 +29,7 @@ public class setupChar extends BasicGameState {
     private int totalFrame;
     private SpriteSheet masterSprite;
     private Image masterImage;
+    private Level_01 lvl01;
     
     public setupChar(int id)
     {
@@ -73,6 +74,7 @@ public class setupChar extends BasicGameState {
             if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
             {
                 sbg.enterState(2);
+                lvl01.setPlayer(player);
             }
         }
     }
@@ -90,8 +92,4 @@ public class setupChar extends BasicGameState {
         return 1;
     }
     
-    public PlayerClass getPlayerInfo()
-    {
-        return player;
-    }
 }

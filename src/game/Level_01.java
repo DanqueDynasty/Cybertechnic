@@ -28,8 +28,13 @@ public class Level_01 extends BasicGameState {
     
     public void init(GameContainer gc, StateBasedGame sbg)throws SlickException
     {
-        player = _charAttrib.getPlayerInfo();
+        
         bmap = new BlockMap("./res/Level_01.tmx");
+    }
+    
+    public void setPlayer(PlayerClass player)
+    {
+        this.player = player;
     }
     
     public void update(GameContainer gc, StateBasedGame sbg, int delta)throws SlickException

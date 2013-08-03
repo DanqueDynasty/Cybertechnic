@@ -70,6 +70,7 @@ public class PlayerClass implements SwingEntityFramework {
         isJumping = false;
         weapon = new ArrayList<Weapon>();
         weapon.add(new Gun());
+        totalFrame = 4;
     }
 
     @Override
@@ -201,7 +202,7 @@ public class PlayerClass implements SwingEntityFramework {
     public void nextFrame()
     {
         currentFrame++;
-        if(currentFrame < totalFrame - 1)
+        if(currentFrame < getTotalFrames() - 1)
         {
             currentFrame = 0;
         }
@@ -217,6 +218,8 @@ public class PlayerClass implements SwingEntityFramework {
     public void setControl(GameContainer gc, int delta, BlockMap bmap)
     {
         Input input = gc.getInput();
+        setTotalFrames(4);
+        setRow(0);
         if(input.isKeyDown(Input.KEY_A))
         {
             setDirection(LEFT);
@@ -227,7 +230,7 @@ public class PlayerClass implements SwingEntityFramework {
             //setDirection(0);
             setKeyPressed(true);
             setTotalFrames(8);
-            setRow(2);
+            setRow(1);
             if(collidedWithTile(bmap) == true)
             {
                 playerVec.x += speed * delta;
@@ -250,7 +253,7 @@ public class PlayerClass implements SwingEntityFramework {
             ceilingPoly.setX(playerVec.x);
             setKeyPressed(true);
             setTotalFrames(8);
-            setRow(2);
+            setRow(1);
             //setDirection(1);
             if(collidedWithTile(bmap) == true)
             {
@@ -261,7 +264,7 @@ public class PlayerClass implements SwingEntityFramework {
             }
         }else{
             setKeyPressed(false);
-            setTotalFrames(0);
+            setTotalFrames(4);
             setRow(0);
         }
         
@@ -358,7 +361,7 @@ public class PlayerClass implements SwingEntityFramework {
         * 
         */
         
-        this.updateSpriteSheet(delta);
+        updateSpriteSheet(delta);
     }
     @Override
     public Vector2f getVector() {

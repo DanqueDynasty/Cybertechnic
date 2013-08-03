@@ -104,7 +104,7 @@ public class Level_01 extends BasicGameState {
             g.setColor(Color.pink);
         }
         g.draw(player.getPolygon());
-        g.drawImage(player.masterImage, player.getVector().getX(), player.getVector().getY());
+        g.drawImage(player.masterImage, player.getPolygon().getX(), player.getPolygon().getY());
         g.resetTransform();
     }
     

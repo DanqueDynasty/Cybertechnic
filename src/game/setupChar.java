@@ -30,6 +30,7 @@ public class setupChar extends BasicGameState {
     private SpriteSheet masterSprite;
     private Image masterImage;
     private Level_01 lvl01;
+    private boolean ready;
     
     public setupChar(int id)
     {
@@ -44,39 +45,56 @@ public class setupChar extends BasicGameState {
         selDarhyl = new Image("./res/darhylChoose_inactive.png");
         selRose = new Image("./res/roseChoose_inactive.png");
         startImage = new Image("./res/starBtn_unactive.png");
+        
+        ready = false;
     }
     
     public void update(GameContainer gc, StateBasedGame sbg, int delta)throws SlickException
     {
         Input input = gc.getInput();
-        
-        //select Darhyl
-        if(input.getMouseX() >= 192 && input.getMouseX() <= 192 + selDarhyl.getWidth() && input.getMouseY() >= 512 && input.getMouseY() <= 512 + selRose.getHeight())
+        //start with the gender button for Darhyl
+        if(input.getMouseX() >= 192 && input.getMouseX() <= (192 + selDarhyl.getWidth()) && input.getMouseY() >= 512 && input.getMouseY() <= (512 + selDarhyl.getHeight()))
         {
-            if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+            if(ready == false)
             {
-                player.setGender(0);
+                if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+                {
+                    ready = true;
+                    player.setGender(0);
+                }
             }
         }
-        
-        //select rose
-        if(input.getMouseX() >= 576 && input.getMouseX() <= 576 + selRose.getHeight() && input.getMouseY() >= 512 && input.getMouseY() <= 512 + selRose.getHeight())
+        //Select rose
+        if(input.getMouseX() >= 576 && input.getMouseX() <= (576 + selRose.getWidth()) && input.getMouseY() >= 512 && input.getMouseY() <= (512 + selRose.getHeight()))
         {
-            if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+            if(ready == false)
             {
-                player.setGender(1);
+                if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+                {
+                    ready = true;
+                    player.setGender(1);
+                }
             }
         }
         
         //start button
-        if(input.getMouseX() >= 384 && input.getMouseY() <= 384 + startImage.getWidth() && input.getMouseY() >= 586 && input.getMouseY() <= 586 + startImage.getHeight() )
+        if(input.getMouseX() >= 384 && input.getMouseX() <= (384 + startImage.getWidth()) && input.getMouseY() >= 586 && input.getMouseY() <= (586 + startImage.getHeight()))
         {
-            if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+            if(ready == true)
             {
-                sbg.enterState(2);
-                lvl01.setPlayer(player);
+                if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+                {
+                    Level_01 lvl = new Level_01(0, player);
+                    sbg.enterState(2);
+                }
             }
         }
+        
+    }
+    
+    public PlayerClass getPlayer()
+    {
+        return player;
     }
     
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g)throws SlickException
@@ -85,6 +103,11 @@ public class setupChar extends BasicGameState {
         g.drawImage(startImage, 384, 586);
         g.drawImage(selRose, 576, 512);
                 
+    }
+    
+    public void setReady(boolean ready)
+    {
+        this.ready = ready;
     }
     
     public int getID()

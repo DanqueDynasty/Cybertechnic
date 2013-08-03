@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class Level_01 extends BasicGameState {
     private static PlayerClass player;
     private ArrayList<EnemyClass> enemyType1;
-    private ArrayList<ProjectileClass> playerBullet;
+    private static ArrayList<ProjectileClass> playerBullet;
     private ArrayList<ProjectileClass> enemyBullet;
     private setupChar _char;
     private static int score;
@@ -34,9 +34,10 @@ public class Level_01 extends BasicGameState {
         
     }
     
-    public Level_01(int score, PlayerClass p)
+    public Level_01(int score, PlayerClass p, ArrayList<ProjectileClass> playerBullet)
     {
         this.player = p;
+        this.playerBullet = playerBullet;
         player.setVector(new Vector2f(0,1000));
         this.score = score;
     }
@@ -69,6 +70,11 @@ public class Level_01 extends BasicGameState {
             {
                 player.setControl(gc, delta, bmap);
                 player.update(delta);
+                for(int i = 0; i < playerBullet.size(); i++)
+                {
+                    playerBullet.get(i).update(gc, delta, player);
+                }
+                System.out.println("playerBulletSize: " + playerBullet.size());
             }else{
                 
             }   
@@ -104,6 +110,11 @@ public class Level_01 extends BasicGameState {
             g.setColor(Color.pink);
         }
         g.draw(player.getPolygon());
+        for(int i = 0; i < playerBullet.size(); i++)
+        {
+            g.setColor(Color.yellow);
+            g.draw(playerBullet.get(i).getPolygon());
+        }
         g.drawImage(player.masterImage, player.getPolygon().getX(), player.getPolygon().getY());
         g.resetTransform();
     }

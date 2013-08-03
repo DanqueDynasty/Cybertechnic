@@ -13,6 +13,8 @@ package game;
  */
 
 import com.Enjyn.PlayerClass;
+import com.Enjyn.ProjectileClass;
+import java.util.ArrayList;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -32,6 +34,7 @@ public class setupChar extends BasicGameState {
     private Level_01 lvl01;
     private boolean ready;
     private SpriteSheet darhySpriteSheet;
+    private ArrayList<ProjectileClass> playerBullet;
     
     public setupChar(int id)
     {
@@ -45,8 +48,9 @@ public class setupChar extends BasicGameState {
         player.setWeaponID(0);
         player.setDirection(1); 
         darhySpriteSheet = new SpriteSheet("./res/masterSprite_Darhyl.png", 64, 80);
+        playerBullet = player.bullet.getProjectile();
         
-        totalFrame = 4;
+        
         selDarhyl = new Image("./res/darhylChoose_inactive.png");
         selRose = new Image("./res/roseChoose_inactive.png");
         startImage = new Image("./res/starBtn_unactive.png");
@@ -91,7 +95,7 @@ public class setupChar extends BasicGameState {
                 if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
                 {              
                     sbg.enterState(2);
-                    Level_01 lvl = new Level_01(0, player);
+                    Level_01 lvl = new Level_01(0, player, playerBullet);
                 }
             }
         }

@@ -71,6 +71,7 @@ public class PlayerClass implements SwingEntityFramework {
         weapon = new ArrayList<Weapon>();
         weapon.add(new Gun());
         totalFrame = 4;
+        currentFrame = 0;
     }
 
     @Override
@@ -202,7 +203,7 @@ public class PlayerClass implements SwingEntityFramework {
     public void nextFrame()
     {
         currentFrame++;
-        if(currentFrame < getTotalFrames() - 1)
+        if(currentFrame > getTotalFrames() - 1)
         {
             currentFrame = 0;
         }
@@ -268,6 +269,8 @@ public class PlayerClass implements SwingEntityFramework {
             setRow(0);
         }
         
+        System.out.println("CurrentFrame" + currentFrame);
+        
         if(input.isKeyPressed(Input.KEY_ENTER) && isOnGround(bmap))
         {
            weapon.get(getWeaponID()).use(poly.getX(), poly.getY()); 
@@ -311,6 +314,8 @@ public class PlayerClass implements SwingEntityFramework {
             ceilingPoly.setY(playerVec.y);
             //System.out.println(isOnGround(bmap));
             setJumpStatus(false);
+            //setTotalFrames(1);
+            //setRow(3);
         }
         
         if(isOnGround(bmap))

@@ -19,7 +19,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.geom.Vector2f;
 
 public class setupChar extends BasicGameState {
-    private PlayerClass player;
+    private static PlayerClass player;
     private Image selDarhyl;
     private Image selRose;
     private Image startImage;
@@ -40,6 +40,9 @@ public class setupChar extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sbg)throws SlickException
     {
         player = new PlayerClass(new Vector2f(100, 100), 64, 80, 0.5f, 0.25f);
+        player.setHealth(100);
+        player.setWeaponID(0);
+        player.setDirection(1);
         
         totalFrame = 4;
         selDarhyl = new Image("./res/darhylChoose_inactive.png");
@@ -83,9 +86,9 @@ public class setupChar extends BasicGameState {
             if(ready == true)
             {
                 if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
-                {
-                    Level_01 lvl = new Level_01(0, player);
+                {              
                     sbg.enterState(2);
+                    Level_01 lvl = new Level_01(0, player);
                 }
             }
         }

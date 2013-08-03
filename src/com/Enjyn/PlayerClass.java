@@ -38,6 +38,7 @@ public class PlayerClass implements SwingEntityFramework {
     public int health;
     public int dir;
     public int gen;
+    public int row;
     public SpriteSheet masterSprite;
     public Image masterImage;
     public float time;
@@ -48,7 +49,6 @@ public class PlayerClass implements SwingEntityFramework {
     public boolean hasFired;
     public boolean activeFire;
     public ProjectileClass bullet;
-    public int animCall;
     
     private ArrayList<Weapon> weapon;
     
@@ -169,12 +169,22 @@ public class PlayerClass implements SwingEntityFramework {
         hasFired = ba;
     }
     
+    public void setTotalFrames(int f)
+    {
+        totalFrame = f;
+    }
+    
+    public void setRow(int r)
+    {
+        row = r;
+    }
+    
     public void setupSpriteSheet(SpriteSheet sprite)
     {
-        int d = getDirection();
+        //int d = getDirection();
+        int d = getRow() + getDirection();
         masterSprite = sprite;
         masterImage = masterSprite.getSprite(currentFrame, d);
-        totalFrame = 4;
     }
     
     public void updateSpriteSheet(int delta)
@@ -411,6 +421,16 @@ public class PlayerClass implements SwingEntityFramework {
     public SpriteSheet getMasterSprite()
     {
         return masterSprite;
+    }
+    
+    public int getRow()
+    {
+        return row;
+    }
+    
+    public int getTotalFrames()
+    {
+        return totalFrame;
     }
     
     public boolean collidedWithTile(BlockMap bmap)

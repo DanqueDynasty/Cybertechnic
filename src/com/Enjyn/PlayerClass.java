@@ -205,7 +205,7 @@ public class PlayerClass implements SwingEntityFramework {
         {
             currentFrame = 0;
         }
-        int d = getDirection();
+        int d = getRow() + getDirection();
         masterImage = masterSprite.getSprite(currentFrame, d);
     }
     public void update(int delta){
@@ -226,6 +226,8 @@ public class PlayerClass implements SwingEntityFramework {
             ceilingPoly.setX(playerVec.x);
             //setDirection(0);
             setKeyPressed(true);
+            setTotalFrames(8);
+            setRow(2);
             if(collidedWithTile(bmap) == true)
             {
                 playerVec.x += speed * delta;
@@ -235,6 +237,8 @@ public class PlayerClass implements SwingEntityFramework {
             }
         }else{
             setKeyPressed(false);
+            setTotalFrames(4);
+            setRow(0);
         }
         
         if(input.isKeyDown(Input.KEY_D))
@@ -245,6 +249,8 @@ public class PlayerClass implements SwingEntityFramework {
             groundPoly.setX(playerVec.x);
             ceilingPoly.setX(playerVec.x);
             setKeyPressed(true);
+            setTotalFrames(8);
+            setRow(2);
             //setDirection(1);
             if(collidedWithTile(bmap) == true)
             {
@@ -255,6 +261,8 @@ public class PlayerClass implements SwingEntityFramework {
             }
         }else{
             setKeyPressed(false);
+            setTotalFrames(0);
+            setRow(0);
         }
         
         if(input.isKeyPressed(Input.KEY_ENTER) && isOnGround(bmap))
@@ -287,6 +295,8 @@ public class PlayerClass implements SwingEntityFramework {
             poly.setY((int)playerVec.y);
             groundPoly.setY(offVec);
             ceilingPoly.setY(playerVec.y);
+            setTotalFrames(1);
+            setRow(3);
         }
         
         if(!isOnGround(bmap))
@@ -347,6 +357,8 @@ public class PlayerClass implements SwingEntityFramework {
         }
         * 
         */
+        
+        this.updateSpriteSheet(delta);
     }
     @Override
     public Vector2f getVector() {

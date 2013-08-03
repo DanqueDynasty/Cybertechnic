@@ -31,6 +31,7 @@ public class setupChar extends BasicGameState {
     private Image masterImage;
     private Level_01 lvl01;
     private boolean ready;
+    private SpriteSheet darhySpriteSheet;
     
     public setupChar(int id)
     {
@@ -42,7 +43,8 @@ public class setupChar extends BasicGameState {
         player = new PlayerClass(new Vector2f(100, 100), 64, 80, 0.5f, 0.25f);
         player.setHealth(100);
         player.setWeaponID(0);
-        player.setDirection(1);
+        player.setDirection(1); 
+        darhySpriteSheet = new SpriteSheet("./res/masterSprite_Darhyl.png", 64, 80);
         
         totalFrame = 4;
         selDarhyl = new Image("./res/darhylChoose_inactive.png");
@@ -64,6 +66,7 @@ public class setupChar extends BasicGameState {
                 {
                     ready = true;
                     player.setGender(0);
+                    player.setupSpriteSheet(darhySpriteSheet);
                 }
             }
         }

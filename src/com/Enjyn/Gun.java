@@ -6,6 +6,7 @@ package com.Enjyn;
 
 import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Rectangle;
 
 /**
  *
@@ -31,5 +32,13 @@ public class Gun extends Weapon{
             bullet.get(i).render(g);
         }
     }
+    @Override
+    public Rectangle getRect(){
+        return rect;
+    }
+    public Rectangle getProjectile(int i){
+        return bullet.get(i).getRect();
+    }
+    private Rectangle rect;
     private ArrayList<Bullet> bullet;
 }

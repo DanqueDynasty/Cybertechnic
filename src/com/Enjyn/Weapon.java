@@ -5,6 +5,7 @@
 package com.Enjyn;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Rectangle;
 
 /**
  *
@@ -24,6 +25,9 @@ public class Weapon {
     }
     public void render(Graphics g){
         
+    }
+    public Rectangle getRect(){
+        return null;
     }
     protected int direction;
 }

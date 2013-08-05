@@ -184,7 +184,7 @@ public class PlayerClass implements SwingEntityFramework {
     public void setupSpriteSheet(SpriteSheet sprite)
     {
         //int d = getDirection();
-        int d = getRow() + getDirection();
+        int d = getRow();
         masterSprite = sprite;
         masterImage = masterSprite.getSprite(currentFrame, d);
     }
@@ -207,7 +207,7 @@ public class PlayerClass implements SwingEntityFramework {
         {
             currentFrame = 0;
         }
-        int d = getRow() + getDirection();
+        int d = getRow();
         masterImage = masterSprite.getSprite(currentFrame, d);
     }
     public void update(int delta){
@@ -220,7 +220,11 @@ public class PlayerClass implements SwingEntityFramework {
     {
         Input input = gc.getInput();
         setTotalFrames(4);
-        setRow(0);
+        if(getDirection()==LEFT){
+            setRow(1);
+        }else{
+            setRow(0);
+        }
         if(input.isKeyDown(Input.KEY_A))
         {
             setDirection(LEFT);
@@ -231,7 +235,7 @@ public class PlayerClass implements SwingEntityFramework {
             //setDirection(0);
             setKeyPressed(true);
             setTotalFrames(8);
-            setRow(1);
+            setRow(3);
             if(collidedWithTile(bmap) == true)
             {
                 playerVec.x += speed * delta;
@@ -242,7 +246,6 @@ public class PlayerClass implements SwingEntityFramework {
         }else{
             setKeyPressed(false);
             setTotalFrames(4);
-            setRow(0);
         }
         
         if(input.isKeyDown(Input.KEY_D))
@@ -254,7 +257,7 @@ public class PlayerClass implements SwingEntityFramework {
             ceilingPoly.setX(playerVec.x);
             setKeyPressed(true);
             setTotalFrames(8);
-            setRow(1);
+            setRow(2);
             //setDirection(1);
             if(collidedWithTile(bmap) == true)
             {
@@ -266,7 +269,6 @@ public class PlayerClass implements SwingEntityFramework {
         }else{
             setKeyPressed(false);
             setTotalFrames(4);
-            setRow(0);
         }
         
         System.out.println("CurrentFrame" + currentFrame);
@@ -302,7 +304,7 @@ public class PlayerClass implements SwingEntityFramework {
             groundPoly.setY(offVec);
             ceilingPoly.setY(playerVec.y);
             setTotalFrames(1);
-            setRow(3);
+            setRow(4);
         }
         
         if(!isOnGround(bmap))
@@ -310,7 +312,7 @@ public class PlayerClass implements SwingEntityFramework {
             playerVec.y += (float)0.2 * delta;
             float offVec = playerVec.getY() + hOffset;
             poly.setY((int)playerVec.y);
-            groundPoly.setY(offVec);
+            groundPoly.setY(offVec); 
             ceilingPoly.setY(playerVec.y);
             //System.out.println(isOnGround(bmap));
             setJumpStatus(false);
@@ -331,7 +333,8 @@ public class PlayerClass implements SwingEntityFramework {
                     groundPoly.setY(offVec);
                     ceilingPoly.setY(playerVec.y);
                 }
-            }          
+            }  
+            setJumpStatus(false);
         }
         
         if(isCeilingTouched(bmap))

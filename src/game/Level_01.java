@@ -46,7 +46,8 @@ public class Level_01 extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sbg)throws SlickException
     {
          bmap = new BlockMap("./res/Level_01.tmx");  
-         enemyType1 = new ArrayList<>();
+         enemyType1 = new ArrayList<EnemyClass
+                 >();
          for(int i = 0; i < 4; i++)
          {
              enemyType1.add(new EnemyClass(new Vector2f(0, 0), 64, 80, .5f, .25f, 1));
@@ -101,6 +102,7 @@ public class Level_01 extends BasicGameState {
         float mapY = bmap.tmap.getTileHeight() - player.getVector().getY() + 650;
         
         g.translate(mapX, mapY);
+        player.render(g);
         bmap.tmap.render(0, 0);
         if(player.getGender() == 0)
         {

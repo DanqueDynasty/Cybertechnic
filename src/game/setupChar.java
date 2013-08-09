@@ -48,7 +48,6 @@ public class setupChar extends BasicGameState {
         player.setWeaponID(0);
         player.setDirection(1); 
         darhySpriteSheet = new SpriteSheet("./res/masterSprite_Darhyl.png", 64, 80);
-        playerBullet = player.bullet.getProjectile();
         
         
         selDarhyl = new Image("./res/darhylChoose_inactive.png");
@@ -111,7 +110,7 @@ public class setupChar extends BasicGameState {
     {
         g.drawImage(selDarhyl, 192, 512);
         g.drawImage(startImage, 384, 586);
-        g.drawImage(selRose, 576, 512);
+        //g.drawImage(selRose, 576, 512);
                 
     }
     

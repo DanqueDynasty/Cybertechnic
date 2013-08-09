@@ -22,8 +22,6 @@ import java.util.ArrayList;
 public class Level_01 extends BasicGameState {
     private static PlayerClass player;
     private ArrayList<EnemyClass> enemyType1;
-    private static ArrayList<ProjectileClass> playerBullet;
-    private ArrayList<ProjectileClass> enemyBullet;
     private setupChar _char;
     private static int score;
     private BlockMap bmap;
@@ -37,7 +35,6 @@ public class Level_01 extends BasicGameState {
     public Level_01(int score, PlayerClass p, ArrayList<ProjectileClass> playerBullet)
     {
         this.player = p;
-        this.playerBullet = playerBullet;
         player.setVector(new Vector2f(0,1000));
         this.score = score;
     }
@@ -54,7 +51,6 @@ public class Level_01 extends BasicGameState {
              enemyType1.get(i).setPosOffset(512);
              enemyType1.get(i).setDisOffset(128);
              enemyType1.get(i).setType(0);
-             enemyBullet = enemyType1.get(i).bullet.getProjectile();
          }
          
          //playerBullet = player.bullet.getProjectile();
@@ -71,17 +67,21 @@ public class Level_01 extends BasicGameState {
             {
                 player.setControl(gc, delta, bmap);
                 player.update(delta);
-                for(int i = 0; i < playerBullet.size(); i++)
+                for(int i = 0; i < enemyType1.size(); i++)
                 {
-                    playerBullet.get(i).update(gc, delta, player);
+                    player.handleDamage(enemyType1.get(i));
+                    if(player.getHealth() <= 0)
+                    {
+                        isGameOver = true;
+                    }
+                    enemyType1.get(i).update(player, bmap, delta);
                 }
-                System.out.println("playerBulletSize: " + playerBullet.size());
             }else{
                 
             }   
         }else{
         //still part of gameOver loop
-            
+            sbg.enterState(0);
         }
     }
     
@@ -112,12 +112,13 @@ public class Level_01 extends BasicGameState {
             g.setColor(Color.pink);
         }
         g.draw(player.getPolygon());
-        for(int i = 0; i < playerBullet.size(); i++)
-        {
-            g.setColor(Color.yellow);
-            g.draw(playerBullet.get(i).getPolygon());
-        }
         g.drawImage(player.masterImage, player.getPolygon().getX(), player.getPolygon().getY());
+        for(int i = 0; i < enemyType1.size(); i++)
+        {
+            g.setColor(Color.red);
+            g.draw(enemyType1.get(i).getPolygon());
+            enemyType1.get(i).render(g);
+        }
         g.resetTransform();
     }
     

@@ -64,8 +64,6 @@ public class PlayerClass implements SwingEntityFramework {
         setupPolygon(vec, w, h);
         setupFootpoly(vec, w, h);
         setupCeilingPoly(vec, w, h);
-        bullet = new ProjectileClass(vec, 16, 16);
-        bullet.setSpeed(.5f);
         hasFired = false;
         isJumping = false;
         weapon = new ArrayList<Weapon>();
@@ -216,6 +214,26 @@ public class PlayerClass implements SwingEntityFramework {
     public void render(Graphics g){
         weapon.get(getWeaponID()).render(g);
     }
+    
+    public void handleDamage(EnemyClass enem)
+    {
+        for(int i = 0; i < enem.getWeapon().size(); i++)
+        {
+            if(enem.getGun().getBulletSize() == 0)
+            {
+            //do Nothing
+            }
+            else
+            {
+                if(enem.getGun().getProjectile(i).intersects(poly))
+                {
+                    int newHealth = this.getHealth() - 15;
+                    setHealth(newHealth);
+                }
+            }
+        }
+    }
+    
     public void setControl(GameContainer gc, int delta, BlockMap bmap)
     {
         Input input = gc.getInput();

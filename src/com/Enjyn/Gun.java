@@ -39,6 +39,12 @@ public class Gun extends Weapon{
     public Rectangle getProjectile(int i){
         return bullet.get(i).getRect();
     }
+    
+    public int getBulletSize()
+    {
+        return bullet.size();
+    }
+    
     private Rectangle rect;
     private ArrayList<Bullet> bullet;
 }

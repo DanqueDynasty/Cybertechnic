@@ -48,7 +48,8 @@ public class PlayerClass implements SwingEntityFramework {
     public int weaponID;    //used to be "weapon", changed so that "weapon" could be the name of the actual weapon arraylist
     public boolean hasFired;
     public boolean activeFire;
-    public ProjectileClass bullet;
+    private Gun shootGun;
+    
     
     private ArrayList<Weapon> weapon;
     
@@ -67,7 +68,8 @@ public class PlayerClass implements SwingEntityFramework {
         hasFired = false;
         isJumping = false;
         weapon = new ArrayList<Weapon>();
-        weapon.add(new Gun());
+        shootGun = new Gun();
+        weapon.add(shootGun);
         totalFrame = 4;
         currentFrame = 0;
     }
@@ -227,8 +229,7 @@ public class PlayerClass implements SwingEntityFramework {
             {
                 if(enem.getGun().getProjectile(i).intersects(poly))
                 {
-                    int newHealth = this.getHealth() - 15;
-                    setHealth(newHealth);
+                    health = health - 15;
                 }
             }
         }
@@ -289,7 +290,7 @@ public class PlayerClass implements SwingEntityFramework {
             setTotalFrames(4);
         }
         
-        System.out.println("CurrentFrame" + currentFrame);
+        System.out.println("CharacterHealth:" + health);
         
         if(input.isKeyPressed(Input.KEY_ENTER) && isOnGround(bmap))
         {
@@ -536,5 +537,15 @@ public class PlayerClass implements SwingEntityFramework {
     public boolean getJumpStatus()
     {
         return isJumping;
+    }
+    
+    public ArrayList<Weapon> getWeapon()
+    {
+        return weapon;
+    }
+    
+    public Gun getGun()
+    {
+        return shootGun;
     }
 }

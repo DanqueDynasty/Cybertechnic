@@ -51,7 +51,10 @@ public class Level_01 extends BasicGameState {
              enemyType1.get(i).setPosOffset(512);
              enemyType1.get(i).setDisOffset(128);
              enemyType1.get(i).setType(0);
+             enemyType1.get(i).setHealth(50);
          }
+         enemyType1.get(0).setVector(new Vector2f(0, 0));
+         enemyType1.get(1).setVector(new Vector2f( 200 ,1000));
          
          //playerBullet = player.bullet.getProjectile();
          isPause = false;
@@ -74,7 +77,16 @@ public class Level_01 extends BasicGameState {
                     {
                         isGameOver = true;
                     }
+                    if(player.getVector().getY() >= bmap.mapHeight)
+                    {
+                        isGameOver = true;
+                    }
                     enemyType1.get(i).update(player, bmap, delta);
+                    enemyType1.get(i).handleDamage(player);
+                    if(enemyType1.get(i).health <= 0)
+                    {
+                        enemyType1.remove(i);
+                    }
                 }
             }else{
                 

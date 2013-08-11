@@ -346,6 +346,24 @@ public class EnemyClass implements SwingEntityFramework{
         }
     }
     
+    public void handleDamage(PlayerClass player)
+    {
+        for(int i = 0; i < player.getWeapon().size(); i++)
+        {
+            if(player.getGun().getBulletSize() == 0)
+            {
+            
+            }
+            else
+            {
+                if(player.getGun().getProjectile(i).intersects(poly))
+                {
+                    health = health - 15;
+                }
+            }
+        }
+    }
+    
     public void render(Graphics g)
     {
         weapon.get(getWeaponID()).render(g);

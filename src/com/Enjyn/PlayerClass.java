@@ -219,17 +219,21 @@ public class PlayerClass implements SwingEntityFramework {
     
     public void handleDamage(EnemyClass enem)
     {
-        for(int i = 0; i < enem.getWeapon().size(); i++)
+        if(enem.getWeapon().size() > 0)
         {
+            for(int i = 0; i < enem.getWeapon().size(); i++)
+            {
             if(enem.getGun().getBulletSize() == 0)
-            {
-            //do Nothing
-            }
-            else
-            {
-                if(enem.getGun().getProjectile(i).intersects(poly))
                 {
-                    health = health - 15;
+            //do Nothing
+                }
+                else
+                {
+                    if(enem.getGun().getProjectile(i).intersects(poly))
+                    {
+                        //enem.getWeapon().remove(i);
+                        health = health -= 15;
+                    }
                 }
             }
         }
@@ -316,7 +320,7 @@ public class PlayerClass implements SwingEntityFramework {
         
         if(getJumpStatus() == true)
         {
-            this.velocityF -= .5 * delta;
+            this.velocityF -= 1 * delta;
             playerVec.y += this.velocityF;
             float offVec = playerVec.getY() + hOffset;
             poly.setY((int)playerVec.y);

@@ -40,7 +40,7 @@ public class Level_02 extends BasicGameState {
     
     public void update(GameContainer gc, StateBasedGame sbg, int delta)throws SlickException
     {
-    
+        System.out.println("In Level2");
     }
     
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g)throws SlickException

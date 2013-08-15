@@ -22,7 +22,6 @@ import java.util.ArrayList;
 public class Level_01 extends BasicGameState {
     private static PlayerClass player;
     private ArrayList<EnemyClass> enemyType1;
-    private setupChar _char;
     private static int score;
     private BlockMap bmap;
     boolean isPause;
@@ -42,7 +41,7 @@ public class Level_01 extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame sbg)throws SlickException
     {
-         bmap = new BlockMap("./res/Level_01.tmx");  
+         bmap = new BlockMap("./res/map/Level_01.tmx");  
          enemyType1 = new ArrayList<EnemyClass
                  >();
          for(int i = 0; i < 4; i++)
@@ -86,8 +85,15 @@ public class Level_01 extends BasicGameState {
                     if(enemyType1.get(i).health <= 0)
                     {
                         enemyType1.remove(i);
+                        score = score + 4;
                     }
                 }
+                if(player.getVector().getX() >= gc.getWidth())
+                {
+                    Level_02 lvl = new Level_02(score, player);
+                    sbg.enterState(3);
+                }
+                System.out.println("PlayerSpeed: " + player.getSpeed());
             }else{
                 
             }   
@@ -132,6 +138,9 @@ public class Level_01 extends BasicGameState {
             enemyType1.get(i).render(g);
         }
         g.resetTransform();
+        g.setColor(Color.white);
+        g.drawString("Score: " + score, 0, 0);
+        g.drawString("Health: " + player.getHealth(), 0, 32);
     }
     
     public PlayerClass getPlayerClass()

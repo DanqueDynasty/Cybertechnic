@@ -22,6 +22,8 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class setupChar extends BasicGameState {
     private static PlayerClass player;
+    private PlayerClass d_previewChar;
+    private PlayerClass r_previewChar;
     private Image selDarhyl;
     private Image selRose;
     private Image startImage;
@@ -47,12 +49,16 @@ public class setupChar extends BasicGameState {
         player.setHealth(100);
         player.setWeaponID(0);
         player.setDirection(1); 
-        darhySpriteSheet = new SpriteSheet("./res/masterSprite_Darhyl.png", 64, 80);
+        darhySpriteSheet = new SpriteSheet("./res/char/masterSprite_Darhyl.png", 64, 80);
         
+        selDarhyl = new Image("./res/gui/darhylChoose_inactive.png");
+        selRose = new Image("./res/gui/roseChoose_inactive.png");
+        startImage = new Image("./res/gui/starBtn_unactive.png");
         
-        selDarhyl = new Image("./res/darhylChoose_inactive.png");
-        selRose = new Image("./res/roseChoose_inactive.png");
-        startImage = new Image("./res/starBtn_unactive.png");
+        d_previewChar = new PlayerClass(new Vector2f(192, 422), 64, 80, 0.5f, 0.25f);
+        d_previewChar.setupSpriteSheet(darhySpriteSheet);
+        d_previewChar.setDirection(1);
+        r_previewChar = new PlayerClass(new Vector2f(576, 422), 64, 80, 0.5f, 0.25f);
         
         ready = false;
     }
@@ -99,6 +105,12 @@ public class setupChar extends BasicGameState {
             }
         }
         
+        d_previewChar.updateSpriteSheet(delta);
+    }
+    
+    public void displayPlayerPreview(Graphics g)
+    {
+        g.drawImage(d_previewChar.getMasterImage(), d_previewChar.getVector().getX(), d_previewChar.getVector().getY());
     }
     
     public PlayerClass getPlayer()
@@ -106,10 +118,12 @@ public class setupChar extends BasicGameState {
         return player;
     }
     
+    
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g)throws SlickException
     {
         g.drawImage(selDarhyl, 192, 512);
         g.drawImage(startImage, 384, 586);
+        displayPlayerPreview(g);
         //g.drawImage(selRose, 576, 512);
                 
     }

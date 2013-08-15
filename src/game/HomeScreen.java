@@ -29,10 +29,10 @@ public class HomeScreen extends BasicGameState{
     
     public void init(GameContainer gc, StateBasedGame sbg)throws SlickException
     {
-        startImage = new Image("./res/starBtn_unactive.png");
-        configImage = new Image("./res/configBtn_unactive.png");
-        helpImage = new Image("./res/helpBtn_unactive.png");
-        quitImage = new Image("./res/quitBtn_unactive.png");
+        startImage = new Image("./res/gui/starBtn_unactive.png");
+        configImage = new Image("./res/gui/configBtn_unactive.png");
+        helpImage = new Image("./res/gui/helpBtn_unactive.png");
+        quitImage = new Image("./res/gui/quitBtn_unactive.png");
     }
     
     public void update(GameContainer gc, StateBasedGame sbg, int delta)throws SlickException

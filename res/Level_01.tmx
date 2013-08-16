@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="128" height="96" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="collisionTile" tilewidth="16" tileheight="16">
+  <image source="collisionTile.png" width="32" height="16"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="128" height="96">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3RwQkAMAgDQLv/0l1AKIi2FO4g34AmAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMisQ7p6qt1dPeTs/07lZ7czectUr9j/h2zqhFI1AMAAAA==
+  </data>
+ </layer>
+</map>

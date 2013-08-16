@@ -10,7 +10,6 @@ package game;
  */
 
 import com.Enjyn.BlockMap;
-import com.Enjyn.Block;
 import com.Enjyn.PlayerClass;
 import com.Enjyn.EnemyClass;
 import com.Enjyn.ProjectileClass;
@@ -123,13 +122,6 @@ public class Level_01 extends BasicGameState {
         g.translate(mapX, mapY);
         player.render(g);
         bmap.tmap.render(0, 0);
-        g.setColor(Color.blue);
-        
-        for(int i = 0; i < bmap.entities.size(); i++)
-        {
-            Block tile = (Block)bmap.entities.get(i);
-            g.draw(tile.poly);
-        }
         if(player.getGender() == 0)
         {
             g.setColor(Color.blue);

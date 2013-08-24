@@ -358,6 +358,7 @@ public class EnemyClass implements SwingEntityFramework{
             {
                 if(player.getGun().getProjectile(i).intersects(poly))
                 {
+                    player.getWeapon().remove(i);
                     health = health - 15;
                 }
             }

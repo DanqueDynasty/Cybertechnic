@@ -256,6 +256,19 @@ public class EnemyClass implements SwingEntityFramework{
         return false;
     }
     
+    public boolean isCollide(BlockMap bmap)
+    {
+        for(int i = 0; i < bmap.entities.size(); i++)
+        {
+            Block tile = (Block) bmap.entities.get(i);
+            if(poly.intersects(tile.poly))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public boolean getFiredStatus()
     {
         return hasFired;
@@ -312,7 +325,7 @@ public class EnemyClass implements SwingEntityFramework{
                 groundPoly.setX(posVec.x);
                 viewPoly.setX(posVec.x - posOffset);
                 //set direction to head left
-                setDirection(0);
+                setDirection(LEFT);
                 //set hasFired;
                 
             }
@@ -324,7 +337,7 @@ public class EnemyClass implements SwingEntityFramework{
                 groundPoly.setX(posVec.x);
                 viewPoly.setX(posVec.x - posOffset);
                 //set direction to go right
-                setDirection(1);
+                setDirection(RIGHT);
             }
             
             ctime +=(float)(delta)/1000;
@@ -358,7 +371,7 @@ public class EnemyClass implements SwingEntityFramework{
             {
                 if(player.getGun().getProjectile(i).intersects(poly))
                 {
-                    player.getWeapon().remove(i);
+                    player.getGun().getBulletArray().remove(i);
                     health = health - 15;
                 }
             }
@@ -379,4 +392,5 @@ public class EnemyClass implements SwingEntityFramework{
     {
         return gun;
     }
+    
 }

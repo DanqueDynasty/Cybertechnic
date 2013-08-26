@@ -45,6 +45,11 @@ public class Gun extends Weapon{
         return bullet.size();
     }
     
+    public ArrayList<Bullet> getBulletArray()
+    {
+        return bullet;
+    }
+    
     private Rectangle rect;
     private ArrayList<Bullet> bullet;
 }

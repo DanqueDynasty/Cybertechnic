@@ -69,6 +69,11 @@ public class Level_02 extends BasicGameState {
                         isGameOver = true;
                     }
                     
+                    if(player.getVector().getY() >= bmap.mapHeight)
+                    {
+                        isGameOver = true;
+                    }
+                    
                     enemy.get(i).update(player, bmap, delta);
                     enemy.get(i).handleDamage(player);
                     if(enemy.get(i).health <= 0)

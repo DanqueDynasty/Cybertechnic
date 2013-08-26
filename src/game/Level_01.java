@@ -58,6 +58,11 @@ public class Level_01 extends BasicGameState {
          //playerBullet = player.bullet.getProjectile();
          isPause = false;
          isGameOver = false;
+         
+         if(isGameOver == true)
+         {
+             isGameOver = false;
+         }
     }
     
     @Override
@@ -87,6 +92,7 @@ public class Level_01 extends BasicGameState {
                         enemyType1.remove(i);
                         score = score + 4;
                     }
+                    
                 }
                 if(player.getVector().getX() >= gc.getWidth())
                 {
@@ -95,6 +101,7 @@ public class Level_01 extends BasicGameState {
                 }
                 System.out.println("PlayerSpeed: " + player.getSpeed());
             }else{
+                //pause loop
                 
             }   
         }else{
@@ -111,9 +118,19 @@ public class Level_01 extends BasicGameState {
         
         if(player.getVector().getX() <= 512)
         {
-            xOffset = 128;
+            //xOffset = 128;
+            xOffset++;
+            if(xOffset == 128)
+            {
+                xOffset += 0;
+            }
         }else{
-            xOffset = 256;
+            //xOffset = 256;
+            xOffset++;
+            if(xOffset == 256)
+            {
+                xOffset += 0;
+            }
         }
         
         float mapX = bmap.tmap.getTileWidth() - player.getVector().getX() + xOffset;

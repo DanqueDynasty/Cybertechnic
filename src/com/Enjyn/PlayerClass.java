@@ -50,7 +50,6 @@ public class PlayerClass implements SwingEntityFramework {
     public boolean activeFire;
     private Gun shootGun;
     
-    
     private ArrayList<Weapon> weapon;
     
     
@@ -231,7 +230,7 @@ public class PlayerClass implements SwingEntityFramework {
                 {
                     if(enem.getGun().getProjectile(i).intersects(poly))
                     {
-                        //enem.getWeapon().remove(i);
+                        enem.getGun().getBulletArray().remove(i);
                         health = health -= 15;
                     }
                 }
@@ -394,6 +393,8 @@ public class PlayerClass implements SwingEntityFramework {
         
         updateSpriteSheet(delta);
     }
+    
+    
     @Override
     public Vector2f getVector() {
         return playerVec;
@@ -552,4 +553,5 @@ public class PlayerClass implements SwingEntityFramework {
     {
         return shootGun;
     }
+    
 }

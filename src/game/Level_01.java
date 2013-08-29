@@ -12,6 +12,7 @@ package game;
 import com.Enjyn.BlockMap;
 import com.Enjyn.PlayerClass;
 import com.Enjyn.EnemyClass;
+import com.Enjyn.OverheadGuiClass;
 import com.Enjyn.ProjectileClass;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
@@ -26,6 +27,7 @@ public class Level_01 extends BasicGameState {
     private BlockMap bmap;
     boolean isPause;
     boolean isGameOver;
+    private OverheadGuiClass gui;
     public Level_01(int id)
     {
         
@@ -56,22 +58,32 @@ public class Level_01 extends BasicGameState {
          enemyType1.get(1).setVector(new Vector2f( 200 ,1000));
          
          //playerBullet = player.bullet.getProjectile();
-         isPause = false;
          isGameOver = false;
          
          if(isGameOver == true)
          {
              isGameOver = false;
          }
+         
+         gui = new OverheadGuiClass();
+         gui.initPauseScreen(gc);
+         gui.setPauseStatus(false);
+         isPause = gui.getPauseStatus();
     }
     
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int delta)throws SlickException
     {
+        Input input = gc.getInput();
         if(!isGameOver)
         {
             if(!isPause)
             {
+                if(input.isKeyPressed(Input.KEY_ESCAPE))
+                {
+                    isPause =! isPause;
+                }
+                
                 player.setControl(gc, delta, bmap);
                 player.update(delta);
                 for(int i = 0; i < enemyType1.size(); i++)
@@ -102,6 +114,11 @@ public class Level_01 extends BasicGameState {
                 System.out.println("PlayerSpeed: " + player.getSpeed());
             }else{
                 //pause loop
+                gui.updatePauseScreen(gc);
+                if(input.isKeyPressed(Input.KEY_ESCAPE))
+                {
+                    isPause =! isPause;
+                }
                 
             }   
         }else{
@@ -111,53 +128,63 @@ public class Level_01 extends BasicGameState {
     }
     
     @Override
-    public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
+    public void render(GameContainer gc, StateBasedGame sbg, Graphics g)throws SlickException
     {
-        float xOffset = 0;
-        float yOffset = 0;
-        
-        if(player.getVector().getX() <= 512)
+        if(isGameOver == false)
         {
+            if(isPause == false)
+            {
+                float xOffset = 0;
+                float yOffset = 0;
+        
+            if(player.getVector().getX() <= 512)
+            {
             //xOffset = 128;
             xOffset++;
             if(xOffset == 128)
             {
                 xOffset += 0;
             }
-        }else{
+            }else{
             //xOffset = 256;
-            xOffset++;
-            if(xOffset == 256)
+                   xOffset++;
+             if(xOffset == 256)
+             {
+                        xOffset += 0;
+                    }
+             }
+        
+                float mapX = bmap.tmap.getTileWidth() - player.getVector().getX() + xOffset;
+                float mapY = bmap.tmap.getTileHeight() - player.getVector().getY() + 650;
+        
+                g.translate(mapX, mapY);
+                player.render(g);
+                bmap.tmap.render(0, 0);
+                if(player.getGender() == 0)
+                {
+                    g.setColor(Color.blue);
+                }else if( player.getGender() == 1)
+                {   
+                    g.setColor(Color.pink);
+                }
+                g.draw(player.getPolygon());
+                g.drawImage(player.masterImage, player.getPolygon().getX(), player.getPolygon().getY());
+                for(int i = 0; i < enemyType1.size(); i++)
+                {
+                    g.setColor(Color.red);
+                    g.draw(enemyType1.get(i).getPolygon());
+                    enemyType1.get(i).render(g);
+                }
+                g.resetTransform();
+                g.setColor(Color.white);
+                g.drawString("Score: " + score, 0, 0);
+                g.drawString("Health: " + player.getHealth(), 0, 32);
+            }
+            else
             {
-                xOffset += 0;
+                gui.renderPauseScreen(gc, g);
             }
         }
-        
-        float mapX = bmap.tmap.getTileWidth() - player.getVector().getX() + xOffset;
-        float mapY = bmap.tmap.getTileHeight() - player.getVector().getY() + 650;
-        
-        g.translate(mapX, mapY);
-        player.render(g);
-        bmap.tmap.render(0, 0);
-        if(player.getGender() == 0)
-        {
-            g.setColor(Color.blue);
-        }else if( player.getGender() == 1)
-        {
-            g.setColor(Color.pink);
-        }
-        g.draw(player.getPolygon());
-        g.drawImage(player.masterImage, player.getPolygon().getX(), player.getPolygon().getY());
-        for(int i = 0; i < enemyType1.size(); i++)
-        {
-            g.setColor(Color.red);
-            g.draw(enemyType1.get(i).getPolygon());
-            enemyType1.get(i).render(g);
-        }
-        g.resetTransform();
-        g.setColor(Color.white);
-        g.drawString("Score: " + score, 0, 0);
-        g.drawString("Health: " + player.getHealth(), 0, 32);
     }
     
     public PlayerClass getPlayerClass()

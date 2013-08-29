@@ -61,6 +61,7 @@ public class GameHere extends StateBasedGame{
             app.setVSync(true);
             app.setTargetFrameRate(60);
             app.setShowFPS(false);
+            app.setIcon("./res/gui/raveWaveIcon.png");
             app.start();
         }catch(SlickException e)
         {

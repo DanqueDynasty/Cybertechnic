@@ -114,7 +114,7 @@ public class Level_01 extends BasicGameState {
                 System.out.println("PlayerSpeed: " + player.getSpeed());
             }else{
                 //pause loop
-                gui.updatePauseScreen(gc);
+                gui.updatePauseScreen(gc, sbg, input);
                 if(input.isKeyPressed(Input.KEY_ESCAPE))
                 {
                     isPause =! isPause;

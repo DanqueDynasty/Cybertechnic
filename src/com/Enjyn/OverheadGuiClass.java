@@ -9,16 +9,17 @@ package com.Enjyn;
  */
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class OverheadGuiClass {
     
     
     private Input input;
     public Sound music;
-    private Image resumeImage;
-    private Image menuImage;
-    private Image volDownImage;
-    private Image volUpImage;
+    public Image resumeImage;
+    public Image menuImage;
+    public Image volDownImage;
+    public Image volUpImage;
     public boolean isPause;
     
     public OverheadGuiClass()
@@ -57,19 +58,28 @@ public class OverheadGuiClass {
         isPause = p;
     }
     
-    public void updatePauseScreen(GameContainer gc)throws SlickException
+    public void updatePauseScreen(GameContainer gc, StateBasedGame sbg, Input input)throws SlickException
     {
-        Input input = gc.getInput();
-        if(input.getMouseX() <= 128 && input.getMouseX() >= 128 + resumeImage.getWidth() && input.getMouseY() >= 196 && input.getMouseY() <= 196 + resumeImage.getHeight())
+        if(input.getMouseX() >= 128 && input.getMouseX() <= 128 + resumeImage.getWidth() && input.getMouseY() >= 196 && input.getMouseY() <= 196 + resumeImage.getHeight())
         {
+            System.out.println("Resume Button: Is In bounds");
             if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
             {
                 //adjust the value for the true or false
-                this.setPauseStatus(false);
+                setPauseStatus(false);
             }
         }
         
-        
+        //menu Button
+        if(input.getMouseX() >= 128 && input.getMouseX() <= (128 + menuImage.getWidth()) && input.getMouseY() >= 270 && input.getMouseY() <= (270 + menuImage.getHeight()))
+        {
+            System.out.println("Menu Button: Is In bounds");
+            if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+            {
+                sbg.enterState(0);
+                setPauseStatus(false);
+            }
+        }
     }
 
     public void renderPauseScreen(GameContainer gc, Graphics g)throws SlickException
